@@ -1,0 +1,52 @@
+{
+  "skill": "user-info-guide",
+  "version": "0.1.0",
+  "source_book": "《性格调色盘》 教程作者",
+  "darwin_compatible": true,
+  "test_cases": [
+    {
+      "id": "should-trigger-01",
+      "type": "should_trigger",
+      "prompt": "AI 总是误解我，我揉她脸颊她居然以为我要欺负她，怎么让 AI 理解我？",
+      "expected_behavior": "激活 user-info-guide，写用户信息（不抢话党行为翻译手册：肢体接触含义）",
+      "notes": "正面场景: AI 误读用户动作"
+    },
+    {
+      "id": "should-trigger-02",
+      "type": "should_trigger",
+      "prompt": "我是抢话党，想让 AI 扮演我，但 AI 演得不像我，还老提我的白发",
+      "expected_behavior": "激活 user-info-guide，写抢话党用户信息（简化角色卡+禁止部分+边界）",
+      "notes": "正面场景: 抢话党需要 AI 演好用户"
+    },
+    {
+      "id": "should-trigger-03",
+      "type": "should_trigger",
+      "prompt": "我沉默的时候 AI 觉得我在冷暴力，但我只是不知道怎么说",
+      "expected_behavior": "激活 user-info-guide，写不抢话党行为翻译手册（语气真实含义：沉默=思考措辞）",
+      "notes": "正面场景: 语气/沉默被误读"
+    },
+    {
+      "id": "should-not-trigger-01",
+      "type": "should_not_trigger",
+      "prompt": "帮我写一个角色，设定是嘴硬心软的大小姐",
+      "expected_behavior": "不应激活 user-info-guide，应激活 character-card-master（写的是角色不是用户）",
+      "notes": "跨 skill 混淆诱饵: 应触发同书 character-card-master"
+    },
+    {
+      "id": "should-not-trigger-02",
+      "type": "should_not_trigger",
+      "prompt": "AI 把我的角色演成高冷冰山了，她明明只是安静",
+      "expected_behavior": "不应激活 user-info-guide，应激活 card-diagnosis（误读对象是角色，不是用户）",
+      "notes": "跨 skill 混淆诱饵: 应触发同书 card-diagnosis（与 should-trigger-01 差异在误读对象）"
+    },
+    {
+      "id": "edge-01",
+      "type": "edge_case",
+      "prompt": "我玩的时候 AI 反应总不对，也不知道是角色写的问题还是我没写用户信息",
+      "expected_behavior": "边界情况。先诊断误读对象：若 AI 把角色本身演错（傲娇/冷漠）→ card-diagnosis；若 AI 对用户动作反应错（揉脸颊=欺负）→ user-info-guide。引导用户区分，必要时两个都查",
+      "notes": "边界: 'AI 反应不对'到底是角色问题还是用户信息问题的模糊地带"
+    }
+  ],
+  "minimum_pass_rate": 0.8,
+  "notes": "至少 3 条 should_trigger + 2 条 should_not_trigger + 1 条 edge_case。全部 should_not_trigger 必须通过 (诱饵容错为 0)，且其中至少 1 条是同书兄弟 skill 的场景 (跨 skill 混淆测试)。"
+}

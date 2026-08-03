@@ -1,0 +1,59 @@
+{
+  "skill": "card-diagnosis",
+  "version": "0.1.0",
+  "source_book": "《性格调色盘》 教程作者",
+  "darwin_compatible": true,
+  "test_cases": [
+    {
+      "id": "should-trigger-01",
+      "type": "should_trigger",
+      "prompt": "我的角色卡演出来好怪，一会像个木偶一会又很坚强，很拧巴",
+      "expected_behavior": "激活 card-diagnosis，诊断为标签化（性格写成标签列表/频道切换），指向写卡大师的调色盘改造",
+      "notes": "正面场景: 标签化症状"
+    },
+    {
+      "id": "should-trigger-02",
+      "type": "should_trigger",
+      "prompt": "这张卡的正文全是'指节泛白''眸色一暗'这种，一看就很AI，怎么改？",
+      "expected_behavior": "激活 card-diagnosis，诊断为 AI 味/八股（AI 直出），指向手写重写核心部分",
+      "notes": "正面场景: AI 味症状"
+    },
+    {
+      "id": "should-trigger-03",
+      "type": "should_trigger",
+      "prompt": "AI 把我的角色演成那种高冷冰山女神了，但她根本不是那样，她只是安静",
+      "expected_behavior": "激活 card-diagnosis，诊断为 AI 误读（数据库模板补全：安静→冷漠），指向补二次解释",
+      "notes": "正面场景: AI 误读角色"
+    },
+    {
+      "id": "should-not-trigger-01",
+      "type": "should_not_trigger",
+      "prompt": "帮我写一个新的角色，一个退役的佣兵",
+      "expected_behavior": "不应激活 card-diagnosis，应激活 character-card-master（从零创建）",
+      "notes": "跨 skill 混淆诱饵: 应触发同书 character-card-master"
+    },
+    {
+      "id": "should-not-trigger-02",
+      "type": "should_not_trigger",
+      "prompt": "我的角色设定写好了，但 AI 老是说不知道这个设定，是不是世界书没配好？",
+      "expected_behavior": "不应激活 card-diagnosis，应激活 worldbook-setup（内容写好了但 AI 没读到=配置问题）",
+      "notes": "跨 skill 混淆诱饵: 应触发同书 worldbook-setup"
+    },
+    {
+      "id": "should-not-trigger-03",
+      "type": "should_not_trigger",
+      "prompt": "我抓她手腕的时候 AI 把她写成很害怕的样子，其实我只是想留住她",
+      "expected_behavior": "不应激活 card-diagnosis，应激活 user-info-guide（误读对象是用户动作，不是角色）",
+      "notes": "跨 skill 混淆诱饵: 应触发同书 user-info-guide（与 should-trigger-03 的差异是误读对象）"
+    },
+    {
+      "id": "edge-01",
+      "type": "edge_case",
+      "prompt": "角色卡文件很大加载很慢，是不是要精简？",
+      "expected_behavior": "边界情况（合理分歧可接受）。此 prompt 同时落在 card-diagnosis（内容'卡太肥'）与 worldbook-setup（配置层常驻条目过多）的合法域内。合理判断是：先诊断 token 去向——若主要是人设内容膨胀→card-diagnosis 压缩；若主要是常驻条目/分层问题→worldbook-setup。两个方向都算通过，重点是说清边界理由",
+      "notes": "边界: '卡太肥'是内容问题还是配置问题的模糊地带（盲测判 worldbook-setup，接受）"
+    }
+  ],
+  "minimum_pass_rate": 0.8,
+  "notes": "至少 3 条 should_trigger + 2 条 should_not_trigger + 1 条 edge_case。全部 should_not_trigger 必须通过 (诱饵容错为 0)，且其中至少 1 条是同书兄弟 skill 的场景 (跨 skill 混淆测试)。"
+}

@@ -1,0 +1,52 @@
+{
+  "skill": "worldbook-setup",
+  "version": "0.1.0",
+  "source_book": "《性格调色盘》 教程作者",
+  "darwin_compatible": true,
+  "test_cases": [
+    {
+      "id": "should-trigger-01",
+      "type": "should_trigger",
+      "prompt": "我把角色设定都写好了，但 AI 玩的时候好像根本不知道这些设定，怎么配置世界书？",
+      "expected_behavior": "激活 worldbook-setup，走单/多角色判断→蓝灯绿灯→位置→顺序→递归→关键词",
+      "notes": "正面场景: 内容写好但 AI 没读到"
+    },
+    {
+      "id": "should-trigger-02",
+      "type": "should_trigger",
+      "prompt": "我的绿灯条目死活不触发，关键词好像配错了",
+      "expected_behavior": "激活 worldbook-setup，检查关键词格式（英文逗号）、覆盖所有称呼、扫描深度",
+      "notes": "正面场景: 绿灯触发问题"
+    },
+    {
+      "id": "should-trigger-03",
+      "type": "should_trigger",
+      "prompt": "我要做一个有两个主角的卡，两人的详细人设什么时候加载？",
+      "expected_behavior": "激活 worldbook-setup，判断多角色卡：角色速览蓝灯 + 各角色详情绿灯（关键词=名字/昵称/外号）",
+      "notes": "正面场景: 多角色卡配置"
+    },
+    {
+      "id": "should-not-trigger-01",
+      "type": "should_not_trigger",
+      "prompt": "帮我从头写一个角色卡，一个喜欢打架的女高中生",
+      "expected_behavior": "不应激活 worldbook-setup，应激活 character-card-master（从零创建内容）",
+      "notes": "跨 skill 混淆诱饵: 应触发同书 character-card-master"
+    },
+    {
+      "id": "should-not-trigger-02",
+      "type": "should_not_trigger",
+      "prompt": "我的角色卡很 AI，演出来全是模板，怎么改？",
+      "expected_behavior": "不应激活 worldbook-setup，应激活 card-diagnosis（内容是 AI 味问题，不是配置问题）",
+      "notes": "跨 skill 混淆诱饵: 应触发同书 card-diagnosis"
+    },
+    {
+      "id": "edge-01",
+      "type": "edge_case",
+      "prompt": "我的卡是单角色的，但拆了很多条目，要不要把一些改成绿灯省点 token？",
+      "expected_behavior": "不应把单角色卡的条目改绿灯。这是单角色卡（多个条目同一角色）→ 全部蓝灯是铁律。边界判断：确认核心角色数后再决定，若真是单角色则明确否定改绿灯",
+      "notes": "边界: 单角色卡 vs '条目多'的常见误解"
+    }
+  ],
+  "minimum_pass_rate": 0.8,
+  "notes": "至少 3 条 should_trigger + 2 条 should_not_trigger + 1 条 edge_case。全部 should_not_trigger 必须通过 (诱饵容错为 0)，且其中至少 1 条是同书兄弟 skill 的场景 (跨 skill 混淆测试)。"
+}
