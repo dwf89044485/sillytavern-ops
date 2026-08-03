@@ -1,0 +1,5 @@
+# macOS
+.DS_Store
+
+# 源码仓库（独立 git 仓库，不推）
+piney/
