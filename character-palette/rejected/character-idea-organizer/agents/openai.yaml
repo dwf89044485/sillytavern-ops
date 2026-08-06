@@ -1,4 +1,0 @@
-interface:
-  display_name: "角色思路整理助手"
-  short_description: "通过24/80/200问循环问答整理角色创作思路，只提问不写人设"
-  default_prompt: "用 $character-idea-organizer 帮我整理角色思路，从24问开始"
