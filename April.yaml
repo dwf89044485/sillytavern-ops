@@ -1,0 +1,26 @@
+# April — light botanical theme (Warp native format)
+# Reconstructed from cmux-april-theme-handoff.md color values
+# Source: Warp "April" theme. White background + moss-green foreground + green accent.
+accent: "#5DA802"        # UI accent (maps to palette[2] green)
+background: "#FFFFFF"    # terminal background
+details: lighter         # light theme
+foreground: "#17703F"    # default text (deep moss green)
+terminal_colors:
+  bright:
+    black: "#3D4B44"
+    blue: "#5AA3D6"
+    cyan: "#5BB8A0"
+    green: "#7CB342"
+    magenta: "#A67ABF"
+    red: "#D04A3D"
+    white: "#2A332E"
+    yellow: "#D89B47"
+  normal:
+    black: "#1A1F1C"
+    blue: "#3D87C8"
+    cyan: "#3F9B85"
+    green: "#5DA802"
+    magenta: "#9B5AAB"
+    red: "#B23B3B"
+    white: "#8CBAA5"
+    yellow: "#B88A3A"
