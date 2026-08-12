@@ -1,8 +1,8 @@
 ---
 name: knot-cli
-description: 通过 knot-cli 命令行与 Knot 平台智能体对话。支持直接提问（chat -p）和指定智能体（--agentId）两种模式，可按需切换模型。适用于日常问答、代码分析、自动化脚本，新建智能体对话。
+description: 通过 knot-cli 命令行与 Knot 平台智能体对话。支持直接提问（chat -p）和指定智能体（--subAgentId）两种模式，可按需切换模型。适用于日常问答、代码分析、自动化脚本，新建智能体对话。
 metadata:
-  version: "0.2.3"
+  version: "0.3.0"
 ---
 
 # Knot CLI Skill
@@ -28,29 +28,29 @@ knot-cli chat -w /path/to/project -p "帮我分析这个项目的代码结构"
 
 ---
 
-## 2. 指定智能体对话
+## 2. 指定子智能体对话
 
-### 第一步：获取智能体 ID
+### 第一步：获取子智能体 ID
 
 ```bash
 knot-cli list-agents
 ```
 
-该命令会列出当前可用的智能体及其 ID。
+该命令会列出当前可用的子智能体及其 ID。
 
-### 第二步：指定智能体发起对话
+### 第二步：指定子智能体发起对话
 
-使用 `--agentId`（或 `-a`）参数指定智能体 ID：
+使用 `--subAgentId` 参数（注意：不是 `--agentId`，没有 `-a` 缩写！）指定子智能体 ID：
 
 ```bash
-knot-cli chat -a <agent_id> -p "你的问题"
+knot-cli chat --subAgentId <agent_id> -p "你的问题"
 ```
 
 **示例：**
 
 ```bash
-# 指定智能体对话
-knot-cli chat -a abc123 -p "帮我做代码审查"
+# 指定子智能体对话
+knot-cli chat --subAgentId abc123 -p "帮我做代码审查"
 ```
 
 ---
@@ -73,19 +73,19 @@ knot-cli chat -p "你的问题" --model "glm-5.2"
 
 **免费模型：**
 
-| 模型名称 | 说明 |
-|----------|------|
-| `glm-5.2` | GLM-5.2（智谱） |
+| 模型名称                | 说明                          |
+| ------------------- | --------------------------- |
+| `glm-5.2`           | GLM-5.2（智谱）                 |
 | `deepseek-v4-flash` | DeepSeek V4 Flash（上下文 128K） |
-| `kimi-k2.7-code` | Kimi K2.7 Code（上下文 128K） |
-| `hy3` | Hunyuan 3（腾讯混元，上下文 224K） |
+| `kimi-k2.7-code`    | Kimi K2.7 Code（上下文 128K）    |
+| `hy3`               | Hunyuan 3（腾讯混元，上下文 224K）    |
 
 **付费模型（TokenHub 接入）：**
 
-| 模型名称 | 说明 |
-|----------|------|
-| `tokenhub_deepseek-v4-flash` | DeepSeek V4 Flash（TokenHub 接入，付费） |
-| `tokenhub_deepseek-v4-pro` | DeepSeek V4 Pro（TokenHub 接入，支持思考，上下文 1M，付费） |
+| 模型名称                         | 说明                                          |
+| ---------------------------- | ------------------------------------------- |
+| `tokenhub_deepseek-v4-flash` | DeepSeek V4 Flash（TokenHub 接入，付费）           |
+| `tokenhub_deepseek-v4-pro`   | DeepSeek V4 Pro（TokenHub 接入，支持思考，上下文 1M，付费） |
 
 > 完整可用模型可通过 `knot-cli model list` 实时查看，以上为常用推荐项。
 
@@ -95,8 +95,8 @@ knot-cli chat -p "你的问题" --model "glm-5.2"
 # 使用 hy3 模型
 knot-cli chat -p "帮我优化这段代码" --model "hy3"
 
-# 指定智能体 + 指定模型
-knot-cli chat -a abc123 -p "帮我做代码审查" --model "glm-5.2"
+# 指定子智能体 + 指定模型
+knot-cli chat --subAgentId abc123 -p "帮我做代码审查" --model "glm-5.2"
 ```
 
 ---
@@ -145,12 +145,40 @@ echo "=== knot-cli 返回结果 ==="
 cat /tmp/knot_result.log
 ```
 
-**指定智能体的异步调用：**
+**指定子智能体的异步调用：**
 
 ```bash
-nohup knot-cli chat -a abc123 -p "帮我做代码审查" > /tmp/review.log 2>&1 &
+nohup knot-cli chat --subAgentId abc123 -p "帮我做代码审查" > /tmp/review.log 2>&1 &
 wait $!
 cat /tmp/review.log
+```
+
+---
+
+## 关键：Prompt 中特殊字符的处理 ★
+
+当 prompt 中包含中文引号（`"` `"`）、反引号、`$` 等特殊字符时，**必须将 prompt 先写入临时文件，再用 cat 读入**，否则 shell 解析会出错导致命令失败：
+
+```bash
+# 错误：prompt 中有中文引号 → shell 解析失败
+knot-cli chat -p "她说"很温柔""
+
+# 正确：写文件 + cat 读入
+echo 'prompt内容' > /tmp/knot_prompt.md
+knot-cli chat -p "$(cat /tmp/knot_prompt.md)" -m ext-glm-5.2
+
+# 多行 prompt 同理
+cat > /tmp/knot_prompt.md << 'EOF'
+你的多行
+prompt 内容
+EOF
+knot-cli chat -p "$(cat /tmp/knot_prompt.md)" -m ext-glm-5.2 --subAgentId <id>
+```
+
+**规则：prompt 中只要出现了任何中文引号（`"` `"` `'` `'`），就必须先写文件再 cat 读入。** 不要试图用转义或引号嵌套解决——直接写文件是最可靠的方式。如果同时需要附加文件（`--files`），可以组合使用：
+
+```bash
+knot-cli chat -p "$(cat /tmp/prompt.md)" --files /path/to/reference.md -m ext-glm-5.2
 ```
 
 ---
@@ -158,4 +186,4 @@ cat /tmp/review.log
 ## 附录：安装 knot-cli
 
 如果没有安装 `knot-cli`，请引导用户自行安装，禁止自动安装!!!
-参考文档：https://iwiki.woa.com/p/4016921090
+参考文档：<https://iwiki.woa.com/p/4016921090>
