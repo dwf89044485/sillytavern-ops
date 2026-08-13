@@ -2,7 +2,7 @@
 
 ## 项目目标
 
-把"性格调色盘"整套教程（11 篇，位于 `性格调色盘/`），变成一个 **AI 内化教程知识、主动引导用户完成角色构建的 skill**。
+把"性格调色盘"整套教程（11 篇，位于 `性格调色盘/`），用 cangjie-skill 蒸馏流程变成 **4 个可执行的 skill**：`char-build-guide`（追问引擎，主入口）、`dialogue-persona`（台词人设）、`worldbook-config`（世界书配置）、`user-info-calibration`（用户信息校准）。
 
 **核心目标始终是帮用户完成角色创作**——用户用这个 skill 的目的是写出角色，不是来上课的。
 
@@ -41,9 +41,21 @@
 ## 必读文件
 
 1. **AGENTS.md** — 本文件，项目目标与进度导航
-2. **教程原文** — `性格调色盘/` 目录下全部 11 篇，skill 要实现的源材料
-3. **handoff / 设计过程文件** — 仓库根目录下以 `*-handoff.md` 或类似命名的文件；设计决策、待补充项都在其中，按需读取最新 / 最相关的一份
+2. **教程原文** — `性格调色盘/` 目录下全部 11 篇 + `大总结教程/` 7 章（skill 的源材料）。目录下 `_AI_READ_THIS_FIRST.md` 定义了教程→skill 的翻译层，读教程前必读
+3. **蒸馏产出与设计文档** — `books/xingge-tiaosepan/`：流水线状态（`PIPELINE_STATE.md`）、架构与拆分（`ARCHITECTURE.md`、`DESIGN_DECISIONS.md`、`SKILL_DECOMPOSITION_BRIEF.md`）、候选池（`candidates/`）、**char-build-guide 设计共识（`design/CHAR_BUILD_GUIDE_DESIGN.md`，唯一权威主文档，先读这个）**，细节回查 `design/` 下其余审查报告
+4. **派发 agent 子任务的 prompt 预制段** — `books/xingge-tiaosepan/design/AGENT_PROMPT_PREFAB.md`，必须注入
 
-## 当前进度
+## 当前进度（cangjie-skill 蒸馏流程）
 
-第一批（SKILL.md + 模板）重写中。后续计划：第二批 references（流程总览/入口引导/素材收集/动机追问）、第三批（多框架推演/组装/验证）、第四批（记录格式/示例库），最后测试评估。
+**阶段 1.5 收尾中。**
+
+| 阶段 | 状态 |
+|------|------|
+| 阶段 0 整书理解 | ✅ `BOOK_OVERVIEW.md` |
+| 阶段 1 五 agent 并行提取 | ✅ `candidates/`（框架 18 / 原则 110 / 案例 20 / 反例 53 / 术语 34） |
+| 阶段 1.5 三重验证 + 拆分决策 | ✅ 最终 4 skill；char-build-guide 设计决策 1.1/1.2/1.3 全部定稿（§12.8 L1-L12、§十三 G1-G9） |
+| 阶段 1.5 审查结论确认 | 🔄 进行中：§九 1.5 的 4 组 🟡/🔴 项待用户逐条拍板（I 段 / A1+case-library / B 段 / description） |
+| 阶段 2 RIA++ 构造 SKILL.md | ⏳ 阻塞于 1.5 确认。char-build-guide 优先，其余 3 个可并行 |
+| 阶段 3-5 链接/测试/交付 | ⏳ 待阶段 2 |
+
+**下一步**：与用户确认 §九 1.5 的四组审查结论（从 I 段开始），确认后进阶段 2 写 SKILL.md。
