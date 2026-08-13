@@ -47,3 +47,13 @@
 ## 当前进度
 
 第一批（SKILL.md + 模板）重写中。后续计划：第二批 references（流程总览/入口引导/素材收集/动机追问）、第三批（多框架推演/组装/验证）、第四批（记录格式/示例库），最后测试评估。
+
+## Cursor Cloud specific instructions
+
+这是一个**纯内容 / skill 仓库**，没有构建系统、没有包管理清单（无 `package.json`、`requirements.txt` 等）、没有单元测试套件、也没有需要常驻的开发服务器。据此设定环境预期，不要去找"启动服务"或"跑 dev server"。
+
+- **产物即 skill**：本仓库的"应用"是给 AI agent 用的 Markdown skill（`.claude/skills/`、`.agents/skills/`）。"运行"一个 skill = 让 agent 读取对应 `SKILL.md` 并按其行为执行。核心 skill 是 `.claude/skills/char-creator/SKILL.md`（引导用户创建角色）。执行前务必遵守本文件最上方"教程 ≠ skill"约束：默认只追问、不教学、不写标签写行为。
+- **唯一的可执行代码**：`.claude/skills/cangjie-skill/scripts/generate_star_history.py`（`.agents/skills/...` 下有同份副本）。仅用 Python 标准库，无第三方依赖。它会读取同目录 `assets/` 下的 base64 字体/图标资源。**联网抓取真实 star 数据需要 `GITHUB_TOKEN` 或 `GH_TOKEN` 环境变量**；若只想验证渲染逻辑，可离线调用其 `render_svg()`（用本地 assets + 合成日期即可产出 SVG）。
+- **`knot-cli` 是外部专有二进制**，环境里默认没有。按 `.claude/skills/knot-cli/SKILL.md` 的明确要求：**禁止自动安装**，需要时引导用户自行安装。
+- 工具链：VM 自带 Python 3.12 与 Node 22，足够本仓库所需；无需额外安装依赖。
+- 没有配置任何 linter；对本仓库有意义的"lint"是校验 skill 文档内部引用链接是否都能解析（`SKILL.md` 里 `references/*.md` 是否都存在）。
