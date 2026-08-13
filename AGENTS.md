@@ -38,24 +38,46 @@
 - **设计决策放在 handoff / 过程文件里**，不绑死某一个具体文件。设计讨论进行中，凡有结论就落到对应的 handoff 文件；本文件只说明"去哪找"，不写"读哪一份"。
 - 过程文件可能有多份（不同主题/阶段并存），以文件名和文件开头的说明判断当前该读哪一份。
 
+## ⚠️ 存在三条平行决策线（2026-08-13 发现）
+
+过去在三个方向分别与 AI 做过探讨，各自产生了完整的决策记录，**互相不知道对方存在**：
+
+| 线 | 位置 | 核心范式 | 深度在哪 |
+|---|---|---|---|
+| A | `books/xingge-tiaosepan/` | 追问引擎 | 执行框架·节奏·运行时承载·快速路径 |
+| B | `性格调色盘/books/char-palette/` | 诊断 + 追问 | 4 个基础诊断的精确判定标准 |
+| C | `没有明确要求禁止读/` | 推演引擎 | 推演机制·交互契约·问题目标层 |
+
+三条线是**平行探索，无取代关系**，不能用"谁写得晚"裁决。碰撞融合结论见 `design/TRACK_MERGE_ANALYSIS.md`，**17 条真冲突全部待用户拍板**。
+
 ## 必读文件
 
-1. **AGENTS.md** — 本文件，项目目标与进度导航
-2. **教程原文** — `性格调色盘/` 目录下全部 11 篇 + `大总结教程/` 7 章（skill 的源材料）。目录下 `_AI_READ_THIS_FIRST.md` 定义了教程→skill 的翻译层，读教程前必读
-3. **蒸馏产出与设计文档** — `books/xingge-tiaosepan/`：流水线状态（`PIPELINE_STATE.md`）、架构与拆分（`ARCHITECTURE.md`、`DESIGN_DECISIONS.md`、`SKILL_DECOMPOSITION_BRIEF.md`）、候选池（`candidates/`）、**char-build-guide 设计共识（`design/CHAR_BUILD_GUIDE_DESIGN.md`，唯一权威主文档，先读这个）**，细节回查 `design/` 下其余审查报告
-4. **派发 agent 子任务的 prompt 预制段** — `books/xingge-tiaosepan/design/AGENT_PROMPT_PREFAB.md`，必须注入
+**按此顺序读，不要跳。**
 
-## 当前进度（cangjie-skill 蒸馏流程）
+1. **AGENTS.md** — 本文件，项目目标与最高优先级约束
+2. **`books/xingge-tiaosepan/design/HANDOFF_TRACK_MERGE.md`** — ⭐ **接手第一份**。当前状态、上一轮做了什么、上一轮错在哪、下一步执行路径、陷阱清单
+3. **`books/xingge-tiaosepan/design/TRACK_MERGE_ANALYSIS.md`** — 三线碰撞全记录。**开头有「效力边界」一节，动手前必读**（上一轮是在零教程原文阅读的条件下做的，已证伪两条结论）
+4. **教程原文** — `性格调色盘/` 全部 11 篇 + `大总结教程/` 7 章 + `工作流/`（源材料）。`_AI_READ_THIS_FIRST.md` 定义了教程→skill 的翻译层，读教程前必读
+5. **三条线各自的决策记录** — 路径见上表。⚠️ 读 C 线时一律以 `_REVISION.md` / `DESIGN_DISCUSSION_01.md` 为准，`DESIGN_HANDOFF.md` 正文有三处已被自我取代
+6. **A 线一阶提取物** — `books/xingge-tiaosepan/candidates/`（240KB，带 `source_quote`）。**已发现收敛进设计文档时有损耗，待审计**
+7. **派发 agent 子任务的 prompt 预制段** — `books/xingge-tiaosepan/design/AGENT_PROMPT_PREFAB.md`，必须注入
 
-**阶段 1.5 收尾中。**
+> `design/CHAR_BUILD_GUIDE_DESIGN.md` 曾被标为"唯一权威主文档"——**那是三线合并前的表述**。它现在是 A 线的主文档，不是三条线的。
+
+## 当前进度
+
+**三线合并中。原 A 线的"阶段 1.5 收尾"已被这件事阻塞——三条线不合并，写谁的 SKILL.md 都是返工。**
 
 | 阶段 | 状态 |
 |------|------|
-| 阶段 0 整书理解 | ✅ `BOOK_OVERVIEW.md` |
-| 阶段 1 五 agent 并行提取 | ✅ `candidates/`（框架 18 / 原则 110 / 案例 20 / 反例 53 / 术语 34） |
-| 阶段 1.5 三重验证 + 拆分决策 | ✅ 最终 4 skill；char-build-guide 设计决策 1.1/1.2/1.3 全部定稿（§12.8 L1-L12、§十三 G1-G9） |
-| 阶段 1.5 审查结论确认 | 🔄 进行中：§九 1.5 的 4 组 🟡/🔴 项待用户逐条拍板（I 段 / A1+case-library / B 段 / description） |
-| 阶段 2 RIA++ 构造 SKILL.md | ⏳ 阻塞于 1.5 确认。char-build-guide 优先，其余 3 个可并行 |
-| 阶段 3-5 链接/测试/交付 | ⏳ 待阶段 2 |
+| A 线 阶段 0–1.5 | ✅ 4 skill 拆分 + 设计决策 L1-L12 / G1-G9 定稿 |
+| B 线 阶段 0–1.5 | ✅ 13 追问动作 + 4 基础诊断判定标准定稿 |
+| C 线 设计 + 三轮审查 | ✅ §2.1–2.23 + 修订 + 讨论记录 |
+| **三线碰撞融合** | ✅ v2.1 `design/TRACK_MERGE_ANALYSIS.md`（22 共识 / 33 净增量 / 8 咬合 / 17 真冲突 / 10 伪冲突 / 8 空缺） |
+| **补齐源头层** | 🔄 **当前所在**。上一轮碰撞是零教程原文阅读做的，已证伪 2 条结论。六步补齐计划见 handoff §5 阶段 I |
+| candidates 收敛损耗审计 | ⏳ 新发现的独立工作线。抽查已撞出 ce43/ce44 两条丢失，总量未知 |
+| 17 条真冲突逐条裁决 | ⏳ 阻塞于源头层补齐。分五批，依赖顺序见 handoff §5 阶段 III |
+| 阶段 2 构造 SKILL.md | ⏳ 阻塞于裁决 |
+| 阶段 3-5 链接/测试/交付 | ⏳ |
 
-**下一步**：与用户确认 §九 1.5 的四组审查结论（从 I 段开始），确认后进阶段 2 写 SKILL.md。
+**下一步**：按 `design/HANDOFF_TRACK_MERGE.md` §5 阶段 I 补齐源头层——先读 `_AI_READ_THIS_FIRST.md`，再读 A 线 `candidates/`（性价比最高），然后做收敛损耗审计。**补齐前不要开始裁决。**
