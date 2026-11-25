@@ -82,7 +82,7 @@ export default function App() {
       </section>
 
       <main className="stage">
-        <div>
+        <div className="device">
           <div className="phone">
             <Room state={state} setState={setState} />
           </div>

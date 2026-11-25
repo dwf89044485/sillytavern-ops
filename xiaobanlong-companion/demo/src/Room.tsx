@@ -27,110 +27,107 @@ export function Room({
       setState((prev) => ({ ...prev, talking: false }));
     }, 420);
   };
+  const last = state.messages.at(-1);
 
   return (
     <div className={`room ${state.night ? "night" : ""} ${state.screenOff ? "off" : ""}`}>
-      <div className={state.night ? "moon" : "sunball"} />
-      <div className="island" />
-      {state.stage >= 1 ? (
+      <div className="world">
+        <div className={state.night ? "moon" : "sunball"} />
         <button className="conch" onClick={() => speak("海马是什么")} type="button">
           百科
         </button>
-      ) : null}
-
-      <div className="stage-area">
-        <Dragon who={state.companion} talking={state.talking} night={state.night} />
-      </div>
-
-      <div className="hud">
-        {state.messages.slice(-4).map((m) => (
-          <div key={m.id} className={`bubble ${m.who}`}>
-            {m.who === "companion" ? `${COMPANIONS[state.companion].name}：` : m.who === "kid" ? "豆豆：" : "围栏："}
-            {m.text}
+        <div className="island" />
+        <div className="stage-area">
+          <Dragon who={state.companion} talking={state.talking} night={state.night} />
+        </div>
+        {last && !state.screenOff && state.overlay === "none" && !state.paywall ? (
+          <div className={`speech speech-${last.who}`}>
+            {last.who === "companion" ? `${COMPANIONS[state.companion].name}：` : last.who === "kid" ? "豆豆：" : "围栏："}
+            {last.text}
           </div>
-        ))}
-      </div>
-
-      <div className="chips">
-        {CHIPS[state.stage].map((c) => (
-          <button key={c} className="chip" type="button" onClick={() => speak(c)}>
-            {c}
-          </button>
-        ))}
-      </div>
-      <div className="micbar">
-        <button className="mic" type="button" onClick={() => speak("小伴龙")}>
-          按住说话
-        </button>
-        {state.stage >= 2 ? (
-          <button className="iconbtn" type="button" onClick={() => speak("帮我画一只恐龙")}>
-            画
-          </button>
         ) : null}
-        {state.stage >= 2 ? (
-          <button className="iconbtn" type="button" onClick={() => speak("讲个刷牙的故事")}>
-            事
-          </button>
+        {state.overlay === "draw" ? <DrawPane state={state} speak={speak} /> : null}
+        {state.overlay === "story" ? <StoryPane state={state} setState={setState} /> : null}
+        {state.overlay === "game" ? (
+          <div className="sheet">
+            <h3>无屏语音小游戏</h3>
+            <p>跟着喊三声「刷干净」。现在 {state.gameHits} / 3。</p>
+            <button type="button" onClick={() => speak("刷干净")}>
+              喊：刷干净
+            </button>
+          </div>
+        ) : null}
+        {state.overlay === "wiki" ? (
+          <div className="sheet">
+            <h3>百科</h3>
+            <p>不是词条页。小伴龙用自己的嘴讲一件能记住的小事。</p>
+            <button type="button" onClick={() => setState((s) => ({ ...s, overlay: "none" }))}>
+              收回
+            </button>
+          </div>
+        ) : null}
+        {state.overlay === "book" ? <BookPane state={state} setState={setState} /> : null}
+        {state.overlay === "camera" ? (
+          <div className="sheet">
+            <h3>拍照认世界（探索）</h3>
+            <p>识别：{state.camera}。不联网搜成人内容。只讲身边能玩的东西。</p>
+            <button type="button" onClick={() => setState((s) => ({ ...s, overlay: "none" }))}>
+              收回
+            </button>
+          </div>
+        ) : null}
+        {state.overlay === "s2s" ? (
+          <div className="sheet">
+            <h3>SVIP · S2S 限时</h3>
+            <p>实时通话试 30 秒。V2.0 仅灰度，不作为 V1 过关项。</p>
+            <button type="button" onClick={() => setState((s) => ({ ...s, overlay: "none", s2s: false }))}>
+              挂断
+            </button>
+          </div>
+        ) : null}
+        {state.paywall ? (
+          <div className="sheet pay">
+            <h3>次数包</h3>
+            <p>画画还剩 {state.drawLeft} 张，故事还剩 {state.storyLeft} 篇。</p>
+            <p>灰度会员演示。毛利率门槛 40%，本包按 46% 计。</p>
+            <button type="button" onClick={() => setState((s) => ({ ...s, paywall: false, drawLeft: 3, storyLeft: 2 }))}>
+              家长已开通
+            </button>
+          </div>
         ) : null}
       </div>
 
-      {state.overlay === "draw" ? <DrawPane state={state} speak={speak} /> : null}
-      {state.overlay === "story" ? <StoryPane state={state} setState={setState} /> : null}
-      {state.overlay === "game" ? (
-        <div className="overlay">
-          <h3>无屏语音小游戏</h3>
-          <p>跟着喊三声「刷干净」。现在 {state.gameHits} / 3。</p>
-          <button type="button" onClick={() => speak("刷干净")}>
-            喊：刷干净
-          </button>
+      <div className="dock">
+        <div className="chips">
+          {CHIPS[state.stage].map((c) => (
+            <button key={c} className="chip" type="button" onClick={() => speak(c)}>
+              {c}
+            </button>
+          ))}
         </div>
-      ) : null}
-      {state.overlay === "wiki" ? (
-        <div className="overlay">
-          <h3>百科</h3>
-          <p>不是词条页。小伴龙用自己的嘴讲一件能记住的小事。</p>
-          <button type="button" onClick={() => setState({ ...state, overlay: "none" })}>
-            收回
+        <div className="micbar">
+          <button className="mic" type="button" onClick={() => speak("小伴龙")}>
+            按住说话
           </button>
+          {state.stage >= 2 ? (
+            <button className="iconbtn" type="button" onClick={() => speak("帮我画一只恐龙")}>
+              画
+            </button>
+          ) : null}
+          {state.stage >= 2 ? (
+            <button className="iconbtn" type="button" onClick={() => speak("讲个刷牙的故事")}>
+              事
+            </button>
+          ) : null}
         </div>
-      ) : null}
-      {state.overlay === "book" ? <BookPane state={state} setState={setState} /> : null}
-      {state.overlay === "camera" ? (
-        <div className="overlay">
-          <h3>拍照认世界（探索）</h3>
-          <p>识别：{state.camera}。不联网搜成人内容。只讲身边能玩的东西。</p>
-          <button type="button" onClick={() => setState({ ...state, overlay: "none" })}>
-            收回
-          </button>
-        </div>
-      ) : null}
-      {state.overlay === "s2s" ? (
-        <div className="overlay">
-          <h3>SVIP · S2S 限时</h3>
-          <p>实时通话试 30 秒。V2.0 仅灰度，不作为 V1 过关项。</p>
-          <button type="button" onClick={() => setState({ ...state, overlay: "none", s2s: false })}>
-            挂断
-          </button>
-        </div>
-      ) : null}
-
-      {state.paywall ? (
-        <div className="overlay pay">
-          <h3>次数包</h3>
-          <p>画画还剩 {state.drawLeft} 张，故事还剩 {state.storyLeft} 篇。</p>
-          <p>灰度会员演示。毛利率门槛 40%，本包按 46% 计。</p>
-          <button type="button" onClick={() => setState({ ...state, paywall: false, drawLeft: 3, storyLeft: 2 })}>
-            家长已开通
-          </button>
-        </div>
-      ) : null}
+      </div>
 
       {state.screenOff ? (
         <div className="wake">
           <div>
             <div className="breathe" />
             <p>息屏晚安。海浪一下，一下。我在这儿。</p>
-            <button type="button" onClick={() => setState(wake(state))}>
+            <button type="button" onClick={() => setState((s) => wake(s))}>
               早晨了
             </button>
           </div>
@@ -142,7 +139,7 @@ export function Room({
 
 function DrawPane({ state, speak }: { state: State; speak: (t: string) => void }) {
   return (
-    <div className="overlay">
+    <div className="sheet">
       <h3>魔法画板 · 2–3 轮再出图</h3>
       <p>
         进度：{state.drawStep}/3。颜色 {state.drawColor || "还没定"}，姿势 {state.drawPose || "还没定"}。
@@ -178,7 +175,7 @@ function DrawPane({ state, speak }: { state: State; speak: (t: string) => void }
 
 function StoryPane({ state, setState }: { state: State; setState: Dispatch<SetStateAction<State>> }) {
   return (
-    <div className="overlay">
+    <div className="sheet">
       <h3>分支互动故事</h3>
       {state.storyNode === "choice" ? (
         <div className="choices">
@@ -188,7 +185,7 @@ function StoryPane({ state, setState }: { state: State; setState: Dispatch<SetSt
       ) : (
         <p>一篇一个结尾。不无限续写。</p>
       )}
-      <button className="ghost" type="button" onClick={() => setState({ ...state, overlay: "none" })}>
+      <button className="ghost" type="button" onClick={() => setState((s) => ({ ...s, overlay: "none" }))}>
         收起
       </button>
     </div>
@@ -206,7 +203,7 @@ function BookPane({ state, setState }: { state: State; setState: Dispatch<SetSta
   const next = Math.min(3, i + 1);
   const prev = Math.max(0, i - 1);
   return (
-    <div className="overlay">
+    <div className="sheet">
       <h3>连环绘本 · 4 页</h3>
       <div className="book">
         <div className="page">
@@ -219,9 +216,9 @@ function BookPane({ state, setState }: { state: State; setState: Dispatch<SetSta
         </div>
       </div>
       <div className="choices">
-        <button type="button" onClick={() => setState({ ...state, bookPage: prev })}>上一页</button>
-        <button type="button" onClick={() => setState({ ...state, bookPage: next })}>下一页</button>
-        <button type="button" onClick={() => setState({ ...state, overlay: "none", bookOpen: false })}>合上</button>
+        <button type="button" onClick={() => setState((s) => ({ ...s, bookPage: prev }))}>上一页</button>
+        <button type="button" onClick={() => setState((s) => ({ ...s, bookPage: next }))}>下一页</button>
+        <button type="button" onClick={() => setState((s) => ({ ...s, overlay: "none", bookOpen: false }))}>合上</button>
       </div>
     </div>
   );
