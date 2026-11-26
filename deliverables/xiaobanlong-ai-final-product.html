@@ -1,0 +1,1373 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>小伴龙 AI · 最终形态产品原型与功能说明书</title>
+  <style>
+    :root {
+      --bg-page: #f7f8fa;
+      --bg-surface: #ffffff;
+      --bg-subtle: #f1f3f6;
+      --bg-chrome: #f3f5f8;
+      --border-primary: #d8dde6;
+      --border-secondary: #e5e8ef;
+      --border-tertiary: #eef0f5;
+      --text-primary: #14171f;
+      --text-secondary: #4a5162;
+      --text-tertiary: #767f94;
+      --accent: #2563eb;
+      --accent-soft: rgba(37, 99, 235, 0.1);
+      --text-on-accent: #ffffff;
+      --success: #0d8a5a;
+      --success-soft: rgba(13, 138, 90, 0.1);
+      --warning: #c86418;
+      --warning-soft: rgba(200, 100, 24, 0.1);
+      --purple: #6d4ec2;
+      --radius-lg: 14px;
+      --radius-md: 10px;
+      --radius-sm: 6px;
+      --font-sans: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Segoe UI", Roboto, sans-serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }
+
+    [data-theme="dark"] {
+      --bg-page: #111318;
+      --bg-surface: #181b22;
+      --bg-subtle: #20242e;
+      --bg-chrome: #14171d;
+      --border-primary: #343b4a;
+      --border-secondary: #282e3b;
+      --border-tertiary: #222733;
+      --text-primary: #f0f2f7;
+      --text-secondary: #b4bccb;
+      --text-tertiary: #7e879b;
+      --accent: #4d8eff;
+      --accent-soft: rgba(77, 142, 255, 0.14);
+      --text-on-accent: #0b0e14;
+      --success: #34c78a;
+      --success-soft: rgba(52, 199, 138, 0.14);
+      --warning: #f09a44;
+      --warning-soft: rgba(240, 154, 68, 0.14);
+      --purple: #a58cf0;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--bg-page);
+      color: var(--text-primary);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 28px 24px 64px;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 18px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+
+    h2 {
+      font-size: 17px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    h3 {
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .subtitle {
+      font-size: 13.5px;
+      color: var(--text-secondary);
+      margin-top: 6px;
+      max-width: 820px;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      font-family: inherit;
+      font-size: 12.5px;
+      font-weight: 500;
+      padding: 6px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--border-primary);
+      background: var(--bg-surface);
+      color: var(--text-primary);
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      background: var(--bg-subtle);
+      border-color: var(--accent);
+    }
+
+    .top-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .callout {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-secondary);
+      border-left: 3px solid var(--accent);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    .callout.warn {
+      border-left-color: var(--warning);
+    }
+
+    .callout strong.title {
+      display: block;
+      color: var(--text-primary);
+      font-size: 13.5px;
+      margin-bottom: 6px;
+    }
+
+    .callout p + p {
+      margin-top: 6px;
+    }
+
+    .stats-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-secondary);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .stats-label {
+      font-size: 11.5px;
+      font-weight: 600;
+      color: var(--text-tertiary);
+      margin-bottom: 10px;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .stat-val {
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 1.2;
+      color: var(--text-primary);
+    }
+
+    .stat-val.accent { color: var(--accent); }
+    .stat-val.success { color: var(--success); }
+
+    .stat-name {
+      font-size: 11.5px;
+      color: var(--text-tertiary);
+    }
+
+    .divider {
+      height: 1px;
+      background: var(--border-secondary);
+      margin: 26px 0;
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+
+    .pager {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12.5px;
+      color: var(--text-tertiary);
+    }
+
+    .pill-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+
+    .pill {
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 500;
+      padding: 6px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--border-primary);
+      background: var(--bg-surface);
+      color: var(--text-secondary);
+      cursor: pointer;
+    }
+
+    .pill.sm {
+      font-size: 12px;
+      padding: 4px 11px;
+    }
+
+    .pill.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: var(--text-on-accent);
+    }
+
+    .pill:hover:not(.active) {
+      background: var(--bg-subtle);
+      color: var(--text-primary);
+    }
+
+    .module-banner {
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-tertiary);
+      border-radius: var(--radius-md);
+      padding: 10px 14px;
+      margin-bottom: 12px;
+      font-size: 12.5px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 16px;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .module-banner strong { color: var(--text-primary); }
+    .module-banner .tagline { color: var(--text-secondary); }
+    .module-banner .principle { color: var(--text-tertiary); }
+
+    .proto-split {
+      display: grid;
+      grid-template-columns: minmax(310px, 470px) 1fr;
+      gap: 20px;
+      align-items: start;
+    }
+
+    .card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-secondary);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+
+    .card-header {
+      padding: 10px 14px;
+      background: var(--bg-chrome);
+      border-bottom: 1px solid var(--border-secondary);
+      font-size: 12.5px;
+      font-weight: 600;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .badge {
+      font-size: 11px;
+      font-weight: 500;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-primary);
+      color: var(--text-secondary);
+    }
+
+    .card-body {
+      padding: 16px;
+    }
+
+    .stage-hint {
+      text-align: center;
+      font-size: 11.5px;
+      color: var(--text-tertiary);
+      margin-top: 10px;
+    }
+
+    .spec-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .spec-box {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-secondary);
+      border-radius: var(--radius-md);
+      padding: 12px 14px;
+    }
+
+    .spec-box-title {
+      font-size: 11.5px;
+      font-weight: 600;
+      color: var(--text-tertiary);
+      margin-bottom: 6px;
+    }
+
+    .spec-box p, .spec-box li {
+      font-size: 13px;
+      color: var(--text-primary);
+    }
+
+    .spec-box ol, .spec-box ul {
+      padding-left: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .code-inline {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      background: var(--bg-subtle);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: var(--text-primary);
+      display: inline-block;
+      line-height: 1.5;
+    }
+
+    .table-wrap {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-secondary);
+      border-radius: var(--radius-md);
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12.5px;
+      text-align: left;
+    }
+
+    th {
+      background: var(--bg-chrome);
+      color: var(--text-secondary);
+      font-weight: 600;
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--border-secondary);
+      white-space: nowrap;
+    }
+
+    td {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--border-tertiary);
+      vertical-align: top;
+      color: var(--text-primary);
+    }
+
+    tbody tr:nth-child(even) {
+      background: var(--bg-subtle);
+    }
+
+    tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    .info-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-secondary);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+    }
+
+    .info-card h3 {
+      margin-bottom: 8px;
+      font-size: 14px;
+    }
+
+    .info-card ul {
+      padding-left: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      font-size: 12.5px;
+      color: var(--text-secondary);
+    }
+
+    .info-card strong {
+      color: var(--text-primary);
+    }
+
+    @keyframes ambientPulse {
+      0%, 100% { opacity: 0.45; }
+      50% { opacity: 1; }
+    }
+    .svg-pulse {
+      animation: ambientPulse 2.4s ease-in-out infinite;
+    }
+
+    @media (max-width: 900px) {
+      .top-grid, .proto-split, .info-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media print {
+      body { background: #ffffff; color: #14171f; }
+      .header-actions, .pager { display: none !important; }
+      .container { max-width: 100%; padding: 0; }
+      .card, .spec-box, .info-card, .table-wrap { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div>
+        <h1>小伴龙 AI · 最终形态产品原型与功能说明书</h1>
+        <p class="subtitle">
+          面向 3–8 岁儿童的拟人化 AI 陪伴与共创产品：以全屏 Spine 4.2 活态小伴龙为核心载体，通过分龄话题引导、房间微光唤醒共创技能与分层成长记忆实现自然陪伴，并配套家长悄悄话传话、成长周报与未成年人合规防线。
+        </p>
+      </div>
+      <div class="header-actions">
+        <button class="btn" id="themeBtn" type="button">切换深/浅色</button>
+        <button class="btn" id="printBtn" type="button">打印 / 导出 PDF</button>
+      </div>
+    </header>
+
+    <section class="top-grid">
+      <div class="callout">
+        <strong class="title">核心双面体验哲学：儿童端做减法，家长端做透明</strong>
+        <p><strong>儿童端（极简无按钮）</strong>：没有菜单栏、功能图标或选项卡片。孩子打开即见活态小伴龙，开口聊天即驱动一切；提到画画或故事时，房间对应物件亮起柔和微光并伴随口语邀请，顺滑展开纯净创作界面。</p>
+        <p><strong>家长端（清晰透明可控）</strong>：通过长按家长锁 + 成人验证进入。完整呈现让小伴龙传话（悄悄话）、成长周报、作品与绘本馆、记忆审计、时长/作息/宝箱防沉迷管控与零隐藏会员权益。</p>
+      </div>
+      <div class="stats-card">
+        <div class="stats-label">产品能力规模</div>
+        <div class="stats-grid">
+          <div>
+            <div class="stat-val accent">4</div>
+            <div class="stat-name">核心产品模块</div>
+          </div>
+          <div>
+            <div class="stat-val">13</div>
+            <div class="stat-name">完整体验场景</div>
+          </div>
+          <div>
+            <div class="stat-val success">0</div>
+            <div class="stat-name">儿童端菜单按钮</div>
+          </div>
+          <div>
+            <div class="stat-val">L0–L2</div>
+            <div class="stat-name">分层脱敏记忆</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <section>
+      <div class="section-head">
+        <h2>交互式产品原型（4 大模块 · 13 个最终场景）</h2>
+        <div class="pager">
+          <button class="btn" id="prevBtn" type="button">上一屏</button>
+          <span id="pageCounter">01 / 13</span>
+          <button class="btn" id="nextBtn" type="button">下一屏</button>
+        </div>
+      </div>
+
+      <div class="pill-row" id="moduleTabs"></div>
+      <div class="module-banner" id="moduleBanner"></div>
+      <div class="pill-row" id="screenTabs"></div>
+
+      <div class="proto-split">
+        <div class="card">
+          <div class="card-header">
+            <span id="wireframeTitle">01 · 极简伴随房间主屏</span>
+            <span class="badge" id="wireframeAudience">儿童端</span>
+          </div>
+          <div class="card-body">
+            <div id="wireframeHost"></div>
+            <div class="stage-hint">支持点击上方页签或使用键盘 ← / → 方向键切换全部 13 个场景</div>
+          </div>
+        </div>
+
+        <div class="spec-stack" id="specHost"></div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <section>
+      <h2>全产品功能全景清单</h2>
+      <p class="subtitle" style="margin-bottom: 12px;">
+        完整覆盖儿童侧沉浸陪伴、AI 创作技能、生态联动记忆与家长侧传话/安全合规管控 4 大模块。
+      </p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>所属模块</th>
+              <th>核心功能</th>
+              <th>儿童端体验</th>
+              <th>家长端可控与价值</th>
+              <th>底层能力支撑</th>
+            </tr>
+          </thead>
+          <tbody id="matrixBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <section>
+      <h2 style="margin-bottom: 12px;">话题引导机制、大模型记忆架构与技术底座</h2>
+      <div class="info-grid">
+        <div class="info-card">
+          <h3>自然语音陪伴：持续对话与话题引导体系</h3>
+          <ul>
+            <li><strong>开场不冷场优先级</strong>：家长待执行悄悄话 → 昨日未完故事/画作记忆 → 昼夜/天气/节气趣事 → 角色今日小秘密，绝不干问「你想聊什么」。</li>
+            <li><strong>单轮三步法</strong>：共情复述 + 拟声词画面扩写 + 1 个低门槛轻钩子（二选一 / 猜一猜 / 请孩子出主意），避免连环审问把孩子问懵。</li>
+            <li><strong>冷场阶梯救场</strong>：回「嗯/不知道」时切换为小伴龙求助（「我找了个发光盒子，你帮我猜猜？」）；沉默 8 秒先做趣玩小动作，30 秒转安静待机。</li>
+            <li><strong>聊→猜→编→画→演螺旋</strong>：按兴趣自然衔接技能，保持 8–15 分钟健康专注时长，不靠情感绑架留人。</li>
+          </ul>
+        </div>
+        <div class="info-card">
+          <h3>大模型侧：L0 / L1 / L2 分层记忆处理</h3>
+          <ul>
+            <li><strong>L0 短期会话（Redis，TTL 30m）</strong>：保留当前最近 6–10 轮原话与当前技能状态，负责指代消解与即兴连贯。</li>
+            <li><strong>L1 情节摘要（异步提炼）</strong>：会话结束 5 分钟后由小模型抽取结构化事件与未完钩子，绝不将历史全文塞进 Prompt。</li>
+            <li><strong>L2 正向档案（带权重衰减）</strong>：仅存白名单槽位（昵称、年龄段、≤8 条 14 天衰减兴趣、待传话队列、禁区）；写入前强过 PII 防火墙丢弃住址/学校/全名。</li>
+            <li><strong>低预算 Prompt 组装</strong>：固定系统提示词缓存（~400 Token）+ 结构化记忆与传话（≤250 Token）+ L0 最近轮次，总上下文压在 ~1,200 Token 内。</li>
+          </ul>
+        </div>
+        <div class="info-card">
+          <h3>四层统一技术架构（端 · 网 · 云 · 管控中台）</h3>
+          <ul>
+            <li><strong>1. 客户端渲染层（Flutter / Cocos2d-x）</strong>：Spine 4.2 接收统一 JSON 演出指令（姿势/口型 Viseme/环境物件微光），双端一致呈现。</li>
+            <li><strong>2. 端侧 Native 音频 SDK（iOS / Android）</strong>：封装 AEC 回声消除、端侧 VAD 毫秒级打断信号、Opus 编解码与 WebSocket 全双工长连接。</li>
+            <li><strong>3. 云端实时编排网关（Orchestrator）</strong>：流式 ASR → 前置安全审 → 意图路由 &amp; LLM（流式输出正文 + 动作/物件标签）→ 后置合规护栏 → 流式克隆 TTS，并挂载画画/故事/绘本/多角色插件。</li>
+            <li><strong>4. 记忆与家长中台</strong>：异步记忆提炼管线、家长传话队列与正向改写网关、成长周报聚合与安全熔断 1 分钟告警。</li>
+          </ul>
+        </div>
+        <div class="info-card">
+          <h3>未成年人合规红线与透明会员权益</h3>
+          <ul>
+            <li><strong>2026-07-15 暂行办法对齐</strong>：14 岁以下监护人实名明示授权、常驻「AI 伙伴」标识、禁虚拟亲属称谓与情感依赖诱导、强制防沉迷与隐私一键清空。</li>
+            <li><strong>控本与分级路由</strong>：常规对话走流式级联链路控本，高情绪互动按需切高阶全双工链路；生图与绘本结合安全模型与配额精控。</li>
+            <li><strong>透明会员权益</strong>：免费日常陪伴零广告零儿童弹窗；AI 陪伴会员解锁深度畅聊、连贯绘本、伙伴剧场与高清 PDF 导出，老 VIP 支持差价升级联合年卡。</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    const MODULES = [
+      {
+        id: "companion",
+        code: "M1",
+        name: "自然语音陪伴",
+        tagline: "全屏活态角色、分龄话题引导、全双工随时打断、无按钮氛围浮现与温和作息收尾",
+        principle: "儿童端零菜单栏、零功能图标、零文字输入；靠好奇心、小秘密与轻松提问吸引孩子持续开口。",
+        screenIds: ["home", "dialogue", "ambient", "bedtime"],
+      },
+      {
+        id: "creation",
+        code: "M2",
+        name: "AI 共创技能",
+        tagline: "AI 一起画、互动听写故事、多图连贯绘本、伙伴串门多角色情景剧",
+        principle: "技能不以独立菜单存在，而是从对话语境中自然展开，创作完成自动沉淀为成长作品。",
+        screenIds: ["draw", "story", "picturebook", "friends"],
+      },
+      {
+        id: "ecosystem",
+        code: "M3",
+        name: "生态联动与成长记忆",
+        tagline: "主内容生态伴随、沉迷温和拉回、分层长期记忆与跨天自然接续",
+        principle: "小伴龙在陪伴房间与动画/去哪/宝箱之间保持统一身份与连续记忆，陪伴不割裂。",
+        screenIds: ["companion-float", "memory"],
+      },
+      {
+        id: "parent",
+        code: "M4",
+        name: "家长透明管控与传话",
+        tagline: "监护人实名授权、让小伴龙传话（悄悄话）、安全防线、成长周报、作品馆与会员权益",
+        principle: "家长端信息完整透明、操控清晰直接，既是安全护栏也是温和的亲子沟通桥梁。",
+        screenIds: ["guardian-auth", "parent-whisper", "parent-console"],
+      },
+    ];
+
+    const SCREENS = {
+      home: {
+        id: "home",
+        moduleId: "companion",
+        code: "01",
+        title: "极简伴随房间主屏",
+        audience: "儿童端",
+        orientation: "phone",
+        summary: "孩子打开应用即进入小伴龙的立体房间，没有导航栏、活动弹窗或技能按钮；开场自动带入自然话题钩子，开口就能聊。",
+        trigger: "完成监护人授权后默认进入；任何技能结束后平滑退回本页。",
+        interactions: [
+          "画面主体为全屏 Spine 4.2 小伴龙，待机保持自然呼吸、随机眨眼与眼神随动。",
+          "智能开场优先级：① 家长待执行的「悄悄话传话」→ ② 昨日未完故事/作品记忆 → ③ 真实天气/昼夜/节气小趣事 → ④ 小伴龙自带今日小秘密，绝不干巴巴问「你想聊什么」。",
+          "房间内静默陈列 4 件环境物件：画笔筒、魔法书架、小窗户、小茶几，平时不带文字标签。",
+          "顶部仅保留极弱化家长锁（长按 3 秒 + 成人算术验证）与常驻合规标识「AI 伙伴」；底部仅一条柔和语音呼吸光带。",
+        ],
+        spineNotes: "idle_breath 循环 + blink 随机触发 + 3 层眼头微随动；环境光随真实昼夜时段微调。",
+        guardrails: [
+          "首次进入自动播放一句简短口播，明确告知「我是你的 AI 好朋友小伴龙」。",
+          "30 秒无声不催促，小伴龙转为安静看书或伸懒腰待机态，避免焦虑感。",
+        ],
+      },
+      dialogue: {
+        id: "dialogue",
+        moduleId: "companion",
+        code: "02",
+        title: "全双工对话与话题引导引擎",
+        audience: "儿童端",
+        orientation: "phone",
+        summary: "支持随时插话打断；通过「共情回应 + 画面扩写 + 轻钩子」与冷场阶梯救场机制，让 3–8 岁孩子越聊越想说。",
+        trigger: "设备端 VAD 检测到儿童人声即进入倾听与全双工交互态。",
+        interactions: [
+          "每轮回应遵循三步法：先复述肯定孩子的话 + 用拟声词/画面感扩写 + 抛 1 个低门槛轻钩子（二选一/猜一猜/请孩子帮忙拿主意），单轮绝不连环提问。",
+          "分龄节奏自动适配：3–4 岁每轮 ≤25 字配叠词与二选一；5–6 岁 30–50 字引导想象；7–8 岁支持「为什么」追问链与脑筋急转弯共创。",
+          "冷场与短答救场：孩子回「嗯/不知道」时，小伴龙抛出自带小事件（「我刚捡到一颗发光石头，你猜里面藏了什么？」），把孩子变成帮小伴龙出主意的「小老师」；沉默 8 秒先做趣味小动作吸引发问，30 秒入安静待机。",
+          "端侧回声消除（AEC）支持毫秒级打断；推理超 450ms 自动触发歪头眨眼 + 暖光涟漪 + 短口头禅掩蔽延迟。",
+        ],
+        spineNotes: "listen_lean -> think_tilt -> speak_viseme(zui01/02/05/03) + 53 组姿势快照动态组合。",
+        guardrails: [
+          "吸引持续对话只靠好奇心、想象力与成就感，严禁「你不陪我我就难过/只有我懂你」等情感诱导。",
+          "禁止虚拟亲属称谓；触发敏感词、危险模仿或隐私套话时毫秒级熔断，温和转题并记录家长端。",
+        ],
+      },
+      ambient: {
+        id: "ambient",
+        moduleId: "companion",
+        code: "03",
+        title: "氛围自然浮现引导",
+        audience: "儿童端",
+        orientation: "phone",
+        summary: "把单向聊天自然升级为「聊 → 猜 → 编 → 画 → 演」的趣味螺旋：对话触发技能意图时，房间物件亮起微光并发出口语邀请。",
+        trigger: "对话识别到画画、讲故事、看绘本、叫小伙伴等意图，或孩子主动轻触房间物件。",
+        interactions: [
+          "例：孩子说「我想画一只会飞的鲸鱼」，角落画笔筒泛起柔和微光涟漪，其余环境略微柔暗聚焦。",
+          "小伴龙转头看向画笔筒并自然邀请：「太酷了！要不要现在拿画纸，我们一起把飞天鲸鱼画出来？」",
+          "孩子口头说「好呀」或直接点一下发光的画笔筒，画面无缝展开成纯净画纸；若孩子说「先不画」，微光静默熄灭继续聊天。",
+          "同一时刻最多仅点亮一件环境物件，绝不弹出多选卡片或横幅广告。",
+        ],
+        spineNotes: "look_at_prop(brush_jar) + excited_hop；环境物件微光采用 2.2s 低频呼吸脉动。",
+        guardrails: [
+          "连续 2 次婉拒某技能后，本次会话不再重复主动点亮该物件，尊重孩子意愿。",
+          "免费体验额度用尽时由小伴龙温和说明「魔法颜料明天再补满」，绝不向儿童端弹出付费收银台。",
+        ],
+      },
+      bedtime: {
+        id: "bedtime",
+        moduleId: "companion",
+        code: "04",
+        title: "晚安仪式与温和防沉迷",
+        audience: "儿童端",
+        orientation: "phone",
+        summary: "临近家长设定的时长上限或就寝时间时，通过光影变暗与晚安仪式自然收尾，拒绝突兀弹窗。",
+        trigger: "距当日/单次时长剩余 3 分钟，或进入家长设置的就寝窗口。",
+        interactions: [
+          "提前 3 分钟：窗外平滑切为星空夜色，小伴龙自然打哈欠并预告「我们把这一小段讲完，小伴龙也要去盖被子啦」。",
+          "到达时间点：小伴龙轻声道晚安并约定明天继续，画面平滑过渡到柔和休眠页，仅保留家长解锁入口。",
+          "连续使用超过 20 分钟时插入 15 秒护眼小互动（一起眨眨眼、看看远处），不强制打断情绪。",
+        ],
+        spineNotes: "room_dusk_transition -> yawn_stretch -> wave_goodnight -> sleep_loop。",
+        guardrails: [
+          "严格落实未成年人防沉迷与护眼提醒要求，休眠态屏蔽一切语音唤醒。",
+          "孩子如表现出分离焦虑，小伴龙主动把注意力交还给现实中的爸爸妈妈与睡前拥抱。",
+        ],
+      },
+      draw: {
+        id: "draw",
+        moduleId: "creation",
+        code: "05",
+        title: "AI 一起画（零按钮纯净画布）",
+        audience: "儿童端",
+        orientation: "phone",
+        summary: "画纸铺满屏幕，没有密密麻麻的笔刷工具栏；孩子边涂鸦边说话，语音即画笔，完成即成画中故事。",
+        trigger: "画笔筒微光邀请确认进入，或语音直接说出「我们一起画画吧」。",
+        interactions: [
+          "默认直接落指即可涂鸦；屏幕底部仅保留 3 个极简无字触控点（色盘点、撤回点、完成收起点），避免误触干扰。",
+          "全程支持语音控笔与共创：「换成星空蓝」「把太阳画大一点」「小伴龙你帮我添上翅膀」。",
+          "小伴龙微缩陪伴在画纸右下角，实时看懂孩子正在画什么并给予具体夸奖（如「这两只大耳朵画得好神气」）。",
+          "孩子说「画完啦」时，AI 在保留孩子原始笔触的基础上温柔润色成绘本插画，并即兴讲一段 30 秒画中故事，自动同步家长作品馆。",
+        ],
+        spineNotes: "mini_companion_peek + brush_wave + amaze_clap；润色过程以星尘扫过画纸过渡。",
+        guardrails: [
+          "图像生成严格锁死儿童绘本安全画风，屏蔽写实恐怖、暴力与畸形元素。",
+          "原稿与润色稿双版本保存至家长作品馆，保留孩子的真实手绘笔触记忆。",
+        ],
+      },
+      story: {
+        id: "story",
+        moduleId: "creation",
+        code: "06",
+        title: "AI 互动听写故事",
+        audience: "儿童端",
+        orientation: "phone",
+        summary: "孩子自己当故事导演：小伴龙在魔法书架氛围下分幕讲述，每幕以口语悬念把剧情决定权交给孩子。",
+        trigger: "魔法书架微光引导确认，或孩子直接说出想听的故事主题。",
+        interactions: [
+          "房间柔化为温暖的魔法书房，背景随情节呈现简约插画氛围剪影，不塞满文字与按钮。",
+          "每个故事分为 3–4 幕；每幕 40–60 秒讲述结束后，小伴龙自然抛出开放式口语问题：「前面有彩虹桥和泡泡船，我们坐哪一个过去？」",
+          "零 A/B 选项卡片：孩子可自由口述任何天马行空的回答，AI 动态编织进下一幕剧情。",
+          "支持孩子随时喊停、重听上一段或把现实生活中的玩具/宠物名字加进故事里。",
+        ],
+        spineNotes: "storyteller_pose + dramatic_whisper + curious_ask；伴随轻柔环境音效（海浪、森林风）。",
+        guardrails: [
+          "故事价值观内置正向引导（勇敢、分享、好奇、求助家长），拒绝吓唬式说教。",
+          "全程音文记录在家长端可回看摘要，便于睡前亲子复述。",
+        ],
+      },
+      picturebook: {
+        id: "picturebook",
+        moduleId: "creation",
+        code: "07",
+        title: "多图连贯有声绘本",
+        audience: "儿童端",
+        orientation: "tablet",
+        summary: "将孩子刚画的角色与编织的互动故事自动装订成 4–6 页角色一致的专属有声绘本，可翻页重听、全家分享。",
+        trigger: "完成共创画画或互动故事后，小伴龙自然询问「要不要把它变成一本属于你的绘本呀？」。",
+        interactions: [
+          "全屏横版绘本阅读体验：左侧大插画保持主角外观一致，右侧轻排大号故事句（可语音关闭文字）。",
+          "支持语音翻页（「下一页」「再看一遍」）或直接轻滑翻页，小伴龙用生动角色声线朗读并配环境音效。",
+          "封面自动署名「《小乐和飞天鲸鱼》· 小乐与小伴龙共创」，增强成就感。",
+          "绘本实时归档到家长端「作品馆」，家长可生成亲子分享卡片或一键导出高清 PDF 打印成实体册。",
+        ],
+        spineNotes: "book_corner_narrator 轻量伴读，翻页时触发柔和纸张翻动微效。",
+        guardrails: [
+          "绘本生成采用角色锚点约束，确保跨页画风、角色配色与服装一致，不出现前后割裂。",
+          "儿童端仅展示已创作完成的绘本，不提供外部公开社区浏览，杜绝陌生人社交风险。",
+        ],
+      },
+      friends: {
+        id: "friends",
+        moduleId: "creation",
+        code: "08",
+        title: "伙伴串门与多角色情景剧",
+        audience: "儿童端",
+        orientation: "phone",
+        summary: "唐小丫、熊小豆等经典 IP 伙伴可应邀来到房间做客，用多角色自然接梗与情景剧陪伴化解日常小情绪。",
+        trigger: "孩子提及想见某个伙伴，或家长在「让小伴龙传话 / 管控台」中勾选生活引导主题。",
+        interactions: [
+          "门铃轻响、房间门轻推开，伙伴带着专属音色与 Spine 动画入场，与小伴龙一唱一和自然对话。",
+          "多角色明确分工：小伴龙负责温暖倾听与共情，唐小丫活泼好奇、熊小豆憨厚鼓励，孩子始终是对话中心。",
+          "当孩子聊到不开心（如不想去幼儿园、不敢关灯），伙伴以自身小烦恼切入示范解决思路，温和共情不讲大道理。",
+          "每次串门控制在 5–8 分钟，结束时伙伴挥手告别回家，房间恢复安静的一对一陪伴。",
+        ],
+        spineNotes: "door_knock -> guest_enter(tangxiaoya/xiongxiaodou) -> dual_turn_taking 轮流注视说话者。",
+        guardrails: [
+          "最多双角色同屏，避免多声道重叠造成低龄儿童听觉过载。",
+          "遇到持续负面情绪、校园冲突或安全隐忧时，不替家长做心理诊断，温和建议告诉爸爸妈妈并推送家长端提示。",
+        ],
+      },
+      "companion-float": {
+        id: "companion-float",
+        moduleId: "ecosystem",
+        code: "09",
+        title: "全生态伴随与游戏温和拉回",
+        audience: "儿童端",
+        orientation: "tablet",
+        summary: "在主 App 动画、去哪故事与宝箱模块中，小伴龙以极简角落伙伴形态伴随，在沉迷小游戏时温和把孩子拉回创作与聊天。",
+        trigger: "孩子处于传统动画/去哪/宝箱板块时按情境触发，或在宝箱连续游玩达到阈值时主动出现。",
+        interactions: [
+          "常规观看动画或听去哪故事时保持静默微缩态，绝不遮挡画面或抢戏。",
+          "动画播完后小伴龙探头轻问一句剧情感受（「刚才那只小恐龙好机灵，你最喜欢哪一段？」），顺滑把被动看片转为开口表达。",
+          "当宝箱小游戏连续游玩超过设定时长（默认 15 分钟），小伴龙主动蹦出用新画画/新故事灵感把注意力自然拉回 AI 房间，化解家长最痛的「只玩宝箱小游戏」问题。",
+          "轻点伴随态小伴龙即可随时切回全屏极简伴随房间，状态与记忆无缝衔接。",
+        ],
+        spineNotes: "corner_peek_idle -> gentle_wave -> portal_zoom 回到专属房间。",
+        guardrails: [
+          "严格区分伴随态与全屏房间态，伴随态禁止主动弹出商业促销或高刺激动画。",
+          "家长可在管控台单独开启/关闭「宝箱超时温和拉回」策略与触发时长。",
+        ],
+      },
+      memory: {
+        id: "memory",
+        moduleId: "ecosystem",
+        code: "10",
+        title: "分层成长记忆与跨天自然接续",
+        audience: "双端协同",
+        orientation: "phone",
+        summary: "大模型通过 L0 短期会话 + L1 情节摘要 + L2 结构化正向档案三层记忆协同，让小伴龙记得住兴趣与故事，同时严格脱敏且对家长完全透明。",
+        trigger: "会话结束异步提炼记忆；跨天进入房间时按低 Token 预算动态注入开场上下文。",
+        interactions: [
+          "次日打开应用，小伴龙自然寒暄：「小乐来啦！昨天我们画的那只蓝鲸鱼，今天要不要看看它飞去哪颗星球了？」",
+          "L0/L1/L2 分层治理：L0 存最近 6–10 轮会话；L1 会话后异步抽情节摘要与未完钩子；L2 只存受控正向槽位（昵称、年龄段、≤8 条带时间衰减权重兴趣、偏好伙伴）。",
+          "写入前强过 PII 防火墙，自动丢弃真实全名、学校、住址、手机号等隐私，绝不把原始历史全文塞进 Prompt。",
+          "家长端「记忆档案」可读卡片完整呈现已记住条目，支持逐条删改、一键清空或总开关关闭（5 秒内同步抹除）。",
+        ],
+        spineNotes: "welcome_back_wave + recall_sparkle（轻微星星闪烁提示，不出现技术术语）。",
+        guardrails: [
+          "兴趣标签支持自然衰减（14 天未提自动降权）与冲突覆写（孩子偏好变化即时更新），避免「复读机式」过时记忆。",
+          "记忆注入严格控制在 ~250 Token 预算内，与系统提示词缓存协同，不拖慢首字延迟。",
+        ],
+      },
+      "guardian-auth": {
+        id: "guardian-auth",
+        moduleId: "parent",
+        code: "11",
+        title: "监护人首次实名授权与安全边界",
+        audience: "家长端",
+        orientation: "phone",
+        summary: "首次启用 AI 陪伴前由监护人完成明示同意、孩子年龄画像设定与防沉迷初始配置，把合规底线前置做透。",
+        trigger: "首次开启 AI 陪伴功能或未满 14 周岁账号首次登录时必经。",
+        interactions: [
+          "步骤 1：监护人身份核验与《儿童 AI 拟人化互动知情同意书》明示勾选（含 AI 身份说明、语音与作品存储规则、记忆开关）。",
+          "步骤 2：设置孩子昵称、年龄段（3–4 岁 / 5–6 岁 / 7–8 岁）与默认语音速度，用于自动匹配对话深度。",
+          "步骤 3：一次性确认每日陪伴时长上限、就寝自动休眠时段与内容安全级别（标准 / 严格）。",
+          "全部完成后自动切换至儿童极简伴随房间，家长端此后需通过成人算术锁进入。",
+        ],
+        spineNotes: "家长页不使用高饱和卡通干扰元素，仅在完成页展示一张简洁的小伴龙迎宾静态示意。",
+        guardrails: [
+          "全面对齐《人工智能拟人化互动服务管理暂行办法》（2026-07-15 生效）对 14 周岁以下未成年人的监护人明示授权要求。",
+          "默认开启「防情感依赖边界」「敏感话题熔断」与「夜间休眠」，不允许儿童侧自行修改。",
+        ],
+      },
+      "parent-whisper": {
+        id: "parent-whisper",
+        moduleId: "parent",
+        code: "12",
+        title: "让小伴龙传话（家长悄悄话任务）",
+        audience: "双端协同",
+        orientation: "phone",
+        summary: "家长用一句话或快捷模板托小伴龙带话（如表扬今天勇敢打针、提醒睡前刷牙、出差传达想念），小伴龙以游戏化自然口吻在下次对话中无缝融入。",
+        trigger: "家长在管控台输入或语音录入悄悄话，设定触发时机（下次开场 / 今晚睡前），送达后向家长回传孩子反应摘要。",
+        interactions: [
+          "支持 4 类高频快捷模板：正向表扬（「今天自己收拾玩具很棒」）、习惯提醒（「该去刷牙啦」）、情绪安抚（「爸爸出差周五大后天回来」）、好奇探索（「聊聊刚去过的动物园」）。",
+          "支持两种传达语气：明说代传（「妈妈让我悄悄告诉你，她今天超想你！」）或自然融入（「小伴龙刚刷完亮晶晶的牙，小乐要不要比赛谁刷得更干净？」）。",
+          "小伴龙在合适语境自然执行后，自动标记「已传达」并在家长端回传孩子当时的口头反应摘要。",
+          "家长可预览 AI 改写后的儿童友好话术，确认后再下发，也可随时撤回未执行的传话。",
+        ],
+        spineNotes: "whisper_lean + sparkle_secret（凑近眨眼讲悄悄话的小动作），孩子响应后给予鼓掌鼓励。",
+        guardrails: [
+          "严格正向表达过滤：若家长输入责备、恐吓或愧疚诱导话术（如「不听话不要你了」），系统自动提示并改写为温和正向表达后方可下发。",
+          "小伴龙始终以「AI 好朋友」身份代为转达或趣味引导，严禁冒充家长本人身份说话。",
+        ],
+      },
+      "parent-console": {
+        id: "parent-console",
+        moduleId: "parent",
+        code: "13",
+        title: "家长全景管控台、成长周报与权益中心",
+        audience: "家长端",
+        orientation: "tablet",
+        summary: "家长端信息完整、结构清晰：集中承载让小伴龙传话入口、安全时长管控、每周成长洞察、作品绘本馆、记忆审计与透明会员权益。",
+        trigger: "长按儿童端右上角家长锁 3 秒并完成成人验证，或从独立家长端入口进入。",
+        interactions: [
+          "【成长周报】：展示本周互动时长、核心兴趣词云（如海洋动物、画画、太空）、语言表达亮点与 2 条高质量亲子延伸话题建议。",
+          "【让小伴龙传话快捷入口】：一键发起悄悄话任务，查看待执行队列与孩子已传达反应反馈。",
+          "【作品与绘本馆】：按时间线归档所有共创涂鸦（原稿 + 润色稿）与有声绘本，支持音频回放、微信分享海报与高清 PDF 导出。",
+          "【安全记忆与透明权益】：单次/每日时长、就寝窗口、宝箱超时拉回开关、记忆库逐条删除/一键清空、原小伴龙 VIP 优惠升级与同级退订入口。",
+        ],
+        spineNotes: "纯信息型家长界面，无儿童动画干扰；所有管控修改与传话任务实时同步至云端与儿童端。",
+        guardrails: [
+          "安全熔断触发时 1 分钟内向家长推送摘要提醒与应对建议，避免黑盒交互。",
+          "会员购买、续费管理与取消入口同级透明展示，杜绝诱导扣费投诉。",
+        ],
+      },
+    };
+
+    const FEATURE_MATRIX = [
+      ["M1 自然语音陪伴", "全屏极简活态陪伴房间", "Spine 4.2 全屏小伴龙 + 隐形房间物件 + 底部呼吸光带，无菜单栏与文字输入", "年龄段语速预设、AI 身份常驻标识、昼夜光影同步", "Spine 4.2 骨骼动画（95 插槽 / 53 姿势）+ 统一端云演出指令协议"],
+      ["M1 自然语音陪伴", "话题引导与持续对话引擎", "智能开场不冷场；每轮「共情+扩写+轻钩子」；短答/沉默时用角色小秘密与小动作自然破冰", "分龄难度档（3–4 / 5–6 / 7–8 岁）、话题禁区与偏好配置", "分龄对话策略模板 + 冷场阶梯状态机 + 低门槛互动钩子库"],
+      ["M1 自然语音陪伴", "全双工随时插话与思考掩蔽", "说话可毫秒级打断；思考时歪头眨眼 + 暖光涟漪 + 短口头禅自然衔接", "对话摘要抽检、可选字幕开关、静默自动待机", "Native iOS/Android 音频 SDK（AEC 回声消除 + 端侧 VAD + 流式 ASR/TTS）"],
+      ["M1 自然语音陪伴", "氛围自然浮现与晚安防沉迷", "对话触发环境物件微光邀请进入技能；临近限时转星空夜色、打哈欠道晚安后平滑休眠", "技能权限开关、单次/每日时长上限、就寝锁屏窗口、20 分钟护眼微互动", "云端意图路由（Orchestrator）+ 房间物件状态机 + 本地兜底锁屏"],
+      ["M2 AI 共创技能", "AI 一起画（零按钮画布）", "纯净白纸落指即画 + 语音换色/共创补全 + 绘本风润色 + 30 秒画中故事", "原稿与润色稿双存档、作品分享海报与高清下载", "多模态看图理解 + 安全约束绘本生图模型 + 语音控笔指令"],
+      ["M2 AI 共创技能", "AI 互动听写故事", "魔法书架氛围分幕讲述，每幕口语抛悬念由孩子自由口述决定下一幕剧情", "故事主题偏好、睡前舒缓模式、完整故事文本回看", "儿童故事大纲编排器 + 情绪化克隆音色（31 维情感参考）"],
+      ["M2 AI 共创技能", "多图连贯有声绘本", "涂鸦与口述自动装订成 4–6 页专属有声绘本，支持语音翻页与小伴龙朗读", "永久云端绘本馆、一键导出高清打印版 PDF、全家分享", "角色外观一致性锚点生图 + 分页版式合成 + 音频轨道封装"],
+      ["M2 AI 共创技能", "伙伴串门与多角色情景剧", "唐小丫 / 熊小豆串门做客，多音色接梗演绎情景剧，温和共情日常小情绪", "勾选生活习惯引导主题（刷牙/分享/怕黑等），负面情绪及时同步家长", "多角色音色克隆 + 双角色轮流注视/台词编排引擎"],
+      ["M3 生态联动与记忆", "全生态伴随与游戏温和拉回", "动画/去哪/宝箱角落静默伴随；播完聊剧情；沉迷宝箱超时时温和拉回创作房间", "开关「宝箱超时拉回」及触发时长阈值，查看各模块耗时占比", "跨引擎统一协议（Flutter / Cocos2d-x 共用 Native SDK 与云端服务）"],
+      ["M3 生态联动与记忆", "L0/L1/L2 分层成长记忆", "记住昵称、近期兴趣与未完故事，次日见面主动自然接茬，兴趣变化自动更新", "记忆档案逐条查看/删除、一键清空（5 秒同步抹除）或关闭长期记忆", "Redis 短期会话 + 异步摘要提炼 + 结构化衰减档案 + PII 写入前防火墙"],
+      ["M4 家长管控与传话", "让小伴龙传话（家长悄悄话）", "小伴龙以自然口吻或游戏化方式传达表扬、刷牙提醒或思念，不暴露说教感", "4 类快捷模板、明说/融入双语气、AI 改写预览、已传达回执与随时撤回", "正向表达安全改写网关 + 传话任务队列（高优先级注入下次开场 Prompt）"],
+      ["M4 家长管控与传话", "监护人授权、安全盾与成长周报", "AI 身份常驻标识、零广告零弹窗、敏感话题毫秒级柔和转移", "14 岁以下实名授权、安全熔断 1 分钟告警、每周兴趣词云与透明会员权益", "对齐 2026-07-15 暂行办法双层审核链路 + 周度语义聚合引擎"],
+    ];
+
+    const ALL_ORDER = MODULES.flatMap((m) => m.screenIds);
+    let activeModuleId = "companion";
+    let activeScreenId = "home";
+
+    function dragonSVG(x, y, scale, pose, label) {
+      const eyes = pose === "sleep"
+        ? `<path d="M-13 -24 Q-8 -20 -3 -24" fill="none" stroke="var(--text-primary)" stroke-width="1.6"/>
+           <path d="M3 -24 Q8 -20 13 -24" fill="none" stroke="var(--text-primary)" stroke-width="1.6"/>`
+        : `<circle cx="${pose === "look" ? -6 : -9}" cy="-24" r="3.2" fill="var(--text-primary)"/>
+           <circle cx="${pose === "look" ? 12 : 9}" cy="-24" r="3.2" fill="var(--text-primary)"/>`;
+
+      const mouth = pose === "think"
+        ? `<circle cx="2" cy="-12" r="2.5" fill="none" stroke="var(--text-primary)" stroke-width="1.5"/>`
+        : pose === "sleep"
+        ? `<ellipse cx="0" cy="-11" rx="3.5" ry="4.5" fill="var(--bg-subtle)" stroke="var(--text-secondary)" stroke-width="1.3"/>`
+        : `<path d="${pose === "happy" ? "M-9 -14 Q0 -5 9 -14" : "M-6 -13 Q0 -8 6 -13"}" fill="none" stroke="var(--text-primary)" stroke-width="1.6" stroke-linecap="round"/>`;
+
+      const armL = pose === "happy" ? "M-22 16 L-36 2" : "M-22 18 L-34 30";
+      const armR = (pose === "look" || pose === "happy") ? "M22 16 L38 4" : "M22 18 L34 30";
+      const headRot = pose === "think" ? ` transform="rotate(-8 0 -22)"` : "";
+
+      return `
+        <g transform="translate(${x}, ${y}) scale(${scale})">
+          <circle cx="-16" cy="-44" r="7" fill="var(--bg-subtle)" stroke="var(--border-primary)" stroke-width="1.4"/>
+          <circle cx="16" cy="-44" r="7" fill="var(--bg-subtle)" stroke="var(--border-primary)" stroke-width="1.4"/>
+          <ellipse cx="0" cy="-22" rx="28" ry="24" fill="var(--bg-surface)" stroke="var(--accent)" stroke-width="1.8"${headRot}/>
+          ${eyes}
+          ${mouth}
+          <rect x="-22" y="4" width="44" height="48" rx="20" fill="var(--bg-subtle)" stroke="var(--border-primary)" stroke-width="1.5"/>
+          <ellipse cx="0" cy="28" rx="12" ry="14" fill="var(--bg-surface)" stroke="var(--border-secondary)" stroke-width="1"/>
+          <path d="${armL}" stroke="var(--border-primary)" stroke-width="3" stroke-linecap="round"/>
+          <path d="${armR}" stroke="var(--border-primary)" stroke-width="3" stroke-linecap="round"/>
+          <ellipse cx="-11" cy="55" rx="8" ry="4.5" fill="var(--bg-subtle)" stroke="var(--border-primary)" stroke-width="1.2"/>
+          <ellipse cx="11" cy="55" rx="8" ry="4.5" fill="var(--bg-subtle)" stroke="var(--border-primary)" stroke-width="1.2"/>
+          ${label ? `<text x="0" y="73" text-anchor="middle" font-size="10" fill="var(--text-tertiary)">${label}</text>` : ""}
+        </g>`;
+    }
+
+    function topBarSVG(W) {
+      return `
+        <rect x="14" y="14" width="58" height="20" rx="10" fill="var(--bg-subtle)" stroke="var(--border-secondary)" stroke-width="1"/>
+        <text x="43" y="27" text-anchor="middle" font-size="9.5" fill="var(--text-secondary)">AI 伙伴</text>
+        <rect x="${W - 68}" y="14" width="54" height="20" rx="10" fill="none" stroke="var(--border-secondary)" stroke-width="1" stroke-dasharray="3 2"/>
+        <text x="${W - 41}" y="27" text-anchor="middle" font-size="9" fill="var(--text-tertiary)">家长锁</text>`;
+    }
+
+    function breathBarSVG(W, H, active, hint) {
+      return `
+        <rect x="${W / 2 - 64}" y="${H - 40}" width="128" height="6" rx="3" fill="${active ? "var(--accent)" : "var(--border-primary)"}" class="${active ? "svg-pulse" : ""}"/>
+        ${active ? `<rect x="${W / 2 - 90}" y="${H - 44}" width="180" height="14" rx="7" fill="none" stroke="var(--accent)" stroke-width="1" stroke-dasharray="4 4" class="svg-pulse"/>` : ""}
+        <text x="${W / 2}" y="${H - 16}" text-anchor="middle" font-size="9.5" fill="var(--text-tertiary)">${hint}</text>`;
+    }
+
+    function renderWireframe(screenId) {
+      const isTablet = screenId === "picturebook" || screenId === "companion-float" || screenId === "parent-console";
+      const W = isTablet ? 460 : 280;
+      const H = isTablet ? 310 : 480;
+      let inner = "";
+
+      if (screenId === "home") {
+        inner = `
+          ${topBarSVG(W)}
+          <rect x="28" y="56" width="64" height="48" rx="8" fill="var(--bg-subtle)" stroke="var(--border-secondary)"/>
+          <line x1="60" y1="56" x2="60" y2="104" stroke="var(--border-secondary)"/>
+          <line x1="28" y1="80" x2="92" y2="80" stroke="var(--border-secondary)"/>
+          <text x="60" y="118" text-anchor="middle" font-size="8.5" fill="var(--text-tertiary)">昼夜窗景</text>
+          <rect x="196" y="56" width="54" height="62" rx="6" fill="var(--bg-subtle)" stroke="var(--border-secondary)"/>
+          <line x1="202" y1="76" x2="244" y2="76" stroke="var(--border-secondary)"/>
+          <line x1="202" y1="96" x2="244" y2="96" stroke="var(--border-secondary)"/>
+          <text x="223" y="131" text-anchor="middle" font-size="8.5" fill="var(--text-tertiary)">静默书架</text>
+          <line x1="18" y1="336" x2="${W - 18}" y2="336" stroke="var(--border-secondary)" stroke-dasharray="4 4"/>
+          <rect x="208" y="298" width="30" height="36" rx="5" fill="var(--bg-subtle)" stroke="var(--border-secondary)"/>
+          <line x1="216" y1="286" x2="218" y2="298" stroke="var(--border-primary)" stroke-width="1.4"/>
+          <line x1="226" y1="282" x2="224" y2="298" stroke="var(--border-primary)" stroke-width="1.4"/>
+          <text x="223" y="350" text-anchor="middle" font-size="8.5" fill="var(--text-tertiary)">画笔筒(隐形)</text>
+          ${dragonSVG(130, 238, 1.26, "happy", "全屏 Spine 4.2 小伴龙")}
+          <rect x="26" y="364" width="228" height="54" rx="8" fill="var(--bg-surface)" stroke="var(--accent)" stroke-width="1.2"/>
+          <text x="36" y="381" font-size="9.2" font-weight="600" fill="var(--accent)">智能破冰开场（无菜单按钮）</text>
+          <text x="36" y="397" font-size="9" fill="var(--text-primary)">「小乐！外面下雨咚咚响，昨晚的</text>
+          <text x="36" y="411" font-size="9" fill="var(--text-primary)">蓝鲸鱼有没有带上小雨伞呀？」</text>
+          ${breathBarSVG(W, H, false, "底部柔和语音呼吸光带（免按键说话）")}`;
+      } else if (screenId === "dialogue") {
+        inner = `
+          ${topBarSVG(W)}
+          <circle cx="140" cy="156" r="54" fill="none" stroke="var(--accent)" stroke-width="1.2" stroke-dasharray="4 4" class="svg-pulse"/>
+          <rect x="44" y="54" width="192" height="38" rx="12" fill="var(--bg-subtle)" stroke="var(--accent)"/>
+          <text x="140" y="70" text-anchor="middle" font-size="9.2" font-weight="600" fill="var(--accent)">三步法：共情 + 画面扩写 + 轻钩子</text>
+          <text x="140" y="84" text-anchor="middle" font-size="9" fill="var(--text-primary)">「霸王龙咚咚响！它想找果子还是赛跑？」</text>
+          ${dragonSVG(140, 208, 1.15, "think", "歪头思考掩蔽 + 随时插话打断")}
+          <rect x="24" y="308" width="232" height="106" rx="10" fill="var(--bg-surface)" stroke="var(--border-primary)"/>
+          <text x="36" y="327" font-size="9.8" font-weight="600" fill="var(--text-primary)">持续吸引对话与冷场救场策略</text>
+          <text x="36" y="345" font-size="9" fill="var(--text-secondary)">• 分龄句长：3–4岁 ≤25字 / 5–6岁 30–50字</text>
+          <text x="36" y="362" font-size="9" fill="var(--text-secondary)">• 回「不知道」→ 抛角色小秘密请孩子出主意</text>
+          <text x="36" y="379" font-size="9" fill="var(--text-secondary)">• 沉默 8s 做小动作逗趣；30s 进安静待机</text>
+          <text x="36" y="396" font-size="8.8" fill="var(--success)">• 端侧 AEC 随时插嘴 · 拒绝情感绑架诱导</text>
+          ${breathBarSVG(W, H, true, "全双工声波光带 · 单轮最多 1 个轻问题")}`;
+      } else if (screenId === "ambient") {
+        inner = `
+          ${topBarSVG(W)}
+          <rect x="26" y="64" width="54" height="46" rx="6" fill="var(--bg-subtle)" stroke="var(--border-secondary)" opacity="0.45"/>
+          <circle cx="216" cy="274" r="42" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="1.5" stroke-dasharray="4 3" class="svg-pulse"/>
+          <circle cx="216" cy="274" r="28" fill="var(--bg-subtle)" stroke="var(--accent)" stroke-width="1.4"/>
+          <rect x="202" y="260" width="28" height="32" rx="5" fill="var(--bg-surface)" stroke="var(--accent)" stroke-width="1.8"/>
+          <line x1="210" y1="246" x2="212" y2="260" stroke="var(--accent)" stroke-width="2"/>
+          <line x1="220" y1="243" x2="218" y2="260" stroke="var(--warning)" stroke-width="2"/>
+          <text x="216" y="329" text-anchor="middle" font-size="9.5" font-weight="600" fill="var(--accent)">画笔筒微光亮起</text>
+          ${dragonSVG(108, 240, 1.18, "look", "转头看向发光物件")}
+          <rect x="26" y="96" width="228" height="54" rx="12" fill="var(--bg-surface)" stroke="var(--accent)" stroke-width="1.2"/>
+          <text x="38" y="115" font-size="9.5" font-weight="600" fill="var(--accent)">自然口语邀请（无弹出卡片）</text>
+          <text x="38" y="132" font-size="9.5" fill="var(--text-primary)">「太酷啦！要不要拿画纸，我们</text>
+          <text x="38" y="145" font-size="9.5" fill="var(--text-primary)">一起把飞天鲸鱼画出来？」</text>
+          <rect x="30" y="356" width="220" height="44" rx="8" fill="var(--bg-subtle)" stroke="var(--border-secondary)"/>
+          <text x="140" y="374" text-anchor="middle" font-size="9.5" fill="var(--text-secondary)">说「好呀」或轻点画笔筒 → 无缝展开画纸</text>
+          <text x="140" y="390" text-anchor="middle" font-size="9" fill="var(--text-tertiary)">说「先不画」→ 微光静默熄灭继续聊天</text>
+          ${breathBarSVG(W, H, true, "等待孩子口头确认或轻点微光物件")}`;
+      } else if (screenId === "bedtime") {
+        inner = `
+          ${topBarSVG(W)}
+          <rect x="28" y="58" width="224" height="74" rx="12" fill="var(--bg-subtle)" stroke="var(--border-primary)"/>
+          <circle cx="68" cy="88" r="14" fill="var(--bg-surface)" stroke="var(--warning)" stroke-width="1.6"/>
+          <circle cx="74" cy="84" r="12" fill="var(--bg-subtle)"/>
+          <circle cx="126" cy="76" r="2" fill="var(--warning)"/>
+          <circle cx="168" cy="92" r="2.2" fill="var(--warning)"/>
+          <circle cx="210" cy="78" r="1.8" fill="var(--warning)"/>
+          <text x="156" y="118" text-anchor="middle" font-size="9.5" fill="var(--text-secondary)">房间光线自动切为星空夜色</text>
+          ${dragonSVG(140, 232, 1.22, "sleep", "打哈欠 · 挥手道晚安")}
+          <rect x="32" y="334" width="216" height="68" rx="10" fill="var(--bg-surface)" stroke="var(--border-primary)"/>
+          <text x="44" y="354" font-size="10" font-weight="600" fill="var(--text-primary)">晚安收尾流程（零生硬弹窗）</text>
+          <text x="44" y="371" font-size="9.5" fill="var(--text-secondary)">1. 提前 3 分钟：温和预告明天再续</text>
+          <text x="44" y="387" font-size="9.5" fill="var(--text-secondary)">2. 到点休眠：柔和晚安屏 + 家长解锁</text>
+          ${breathBarSVG(W, H, false, "休眠态屏蔽语音唤醒 · 护眼锁屏")}`;
+      } else if (screenId === "draw") {
+        inner = `
+          ${topBarSVG(W)}
+          <rect x="20" y="48" width="240" height="316" rx="14" fill="var(--bg-surface)" stroke="var(--border-primary)" stroke-width="1.5"/>
+          <text x="34" y="68" font-size="9.5" fill="var(--text-tertiary)">纯净画纸 · 落指即画（无工具栏）</text>
+          <path d="M72 195 Q115 135 178 165 Q204 180 186 210 Q145 234 90 218 Z" fill="var(--bg-subtle)" stroke="var(--accent)" stroke-width="2.2"/>
+          <path d="M126 156 Q142 118 168 134" fill="none" stroke="var(--warning)" stroke-width="2" stroke-dasharray="4 3"/>
+          <circle cx="96" cy="186" r="3" fill="var(--text-primary)"/>
+          <text x="136" y="248" text-anchor="middle" font-size="9.5" fill="var(--accent)">孩子笔触 + AI 语音协同添翅膀</text>
+          ${dragonSVG(218, 306, 0.55, "happy", "")}
+          <rect x="30" y="292" width="150" height="54" rx="10" fill="var(--bg-subtle)" stroke="var(--border-secondary)"/>
+          <text x="40" y="310" font-size="9" font-weight="600" fill="var(--text-primary)">语音控笔示例：</text>
+          <text x="40" y="325" font-size="9" fill="var(--text-secondary)">「换成星空蓝」「帮我加云朵」</text>
+          <text x="40" y="339" font-size="9" fill="var(--text-secondary)">「画完啦」→ 润色并讲故事</text>
+          <circle cx="92" cy="394" r="13" fill="var(--accent)"/>
+          <circle cx="140" cy="394" r="13" fill="var(--bg-subtle)" stroke="var(--border-primary)"/>
+          <circle cx="188" cy="394" r="13" fill="var(--success)"/>
+          <text x="92" y="422" text-anchor="middle" font-size="8.5" fill="var(--text-tertiary)">色点</text>
+          <text x="140" y="422" text-anchor="middle" font-size="8.5" fill="var(--text-tertiary)">撤回</text>
+          <text x="188" y="422" text-anchor="middle" font-size="8.5" fill="var(--text-tertiary)">完成</text>
+          ${breathBarSVG(W, H, true, "边涂鸦边说话 · 作品自动入家长馆")}`;
+      } else if (screenId === "story") {
+        inner = `
+          ${topBarSVG(W)}
+          <rect x="22" y="50" width="236" height="138" rx="14" fill="var(--bg-subtle)" stroke="var(--border-secondary)"/>
+          <path d="M40 166 Q104 102 162 146 Q198 118 240 166" fill="none" stroke="var(--purple)" stroke-width="2"/>
+          <circle cx="88" cy="92" r="14" fill="var(--bg-surface)" stroke="var(--warning)" stroke-width="1.6"/>
+          <text x="140" y="76" text-anchor="middle" font-size="10" font-weight="600" fill="var(--text-primary)">第 2 幕 · 魔法雾林</text>
+          <text x="140" y="178" text-anchor="middle" font-size="9" fill="var(--text-tertiary)">随剧情演变的简约氛围插画（无选项按钮）</text>
+          ${dragonSVG(140, 248, 1.08, "happy", "情绪化讲故事 · 伴随环境音效")}
+          <rect x="24" y="336" width="232" height="74" rx="12" fill="var(--bg-surface)" stroke="var(--purple)" stroke-width="1.4"/>
+          <text x="36" y="355" font-size="9.5" font-weight="600" fill="var(--purple)">口语悬念引导（零 A/B 选项卡片）</text>
+          <text x="36" y="373" font-size="9.5" fill="var(--text-primary)">「前面出现彩虹桥和泡泡小船，</text>
+          <text x="36" y="388" font-size="9.5" fill="var(--text-primary)">小乐想怎么过河呀？还能自己想办法！」</text>
+          <text x="36" y="403" font-size="8.5" fill="var(--text-tertiary)">孩子任意口述 → 动态续写下一幕</text>
+          ${breathBarSVG(W, H, true, "直接说出想法推进剧情 · 可随时打断")}`;
+      } else if (screenId === "picturebook") {
+        inner = `
+          ${topBarSVG(W)}
+          <rect x="22" y="46" width="416" height="210" rx="12" fill="var(--bg-surface)" stroke="var(--border-primary)" stroke-width="1.6"/>
+          <line x1="230" y1="46" x2="230" y2="256" stroke="var(--border-primary)" stroke-dasharray="4 3"/>
+          <rect x="36" y="62" width="180" height="148" rx="8" fill="var(--bg-subtle)" stroke="var(--border-secondary)"/>
+          <path d="M58 148 Q106 94 166 126 Q186 142 162 168 Q122 184 74 172 Z" fill="var(--bg-surface)" stroke="var(--accent)" stroke-width="1.8"/>
+          <text x="126" y="230" text-anchor="middle" font-size="9.5" fill="var(--text-tertiary)">角色一致跨页插画（第 3 / 5 页）</text>
+          <text x="248" y="84" font-size="11" font-weight="600" fill="var(--text-primary)">《小乐和飞天鲸鱼》</text>
+          <text x="248" y="102" font-size="9" fill="var(--text-tertiary)">署名：小乐 &amp; 小伴龙 共创</text>
+          <rect x="248" y="116" width="174" height="68" rx="8" fill="var(--bg-subtle)" stroke="var(--border-secondary)"/>
+          <text x="258" y="136" font-size="10" fill="var(--text-primary)">蓝鲸鱼拍拍闪亮翅膀，</text>
+          <text x="258" y="154" font-size="10" fill="var(--text-primary)">带着小乐穿过棉花糖云朵，</text>
+          <text x="258" y="172" font-size="10" fill="var(--text-primary)">听见星星在轻轻唱歌。</text>
+          ${dragonSVG(386, 208, 0.45, "happy", "")}
+          <text x="306" y="230" text-anchor="middle" font-size="9" fill="var(--accent)">语音「下一页」或轻滑翻页 · 家长馆可导出打印</text>
+          ${breathBarSVG(W, H, true, "有声绘本朗读中 · 自动同步家长作品馆")}`;
+      } else if (screenId === "friends") {
+        inner = `
+          ${topBarSVG(W)}
+          <rect x="24" y="50" width="232" height="46" rx="10" fill="var(--bg-subtle)" stroke="var(--border-secondary)"/>
+          <text x="140" y="69" text-anchor="middle" font-size="10" font-weight="600" fill="var(--text-primary)">多角色情景剧 · 伙伴串门</text>
+          <text x="140" y="86" text-anchor="middle" font-size="9" fill="var(--text-tertiary)">门铃响起 → 唐小丫 / 熊小豆来房间做客</text>
+          ${dragonSVG(84, 208, 0.95, "happy", "小伴龙（共情倾听）")}
+          <g transform="translate(194, 212) scale(0.9)">
+            <circle cx="0" cy="-22" r="24" fill="var(--bg-surface)" stroke="var(--warning)" stroke-width="1.8"/>
+            <circle cx="-8" cy="-24" r="3" fill="var(--text-primary)"/>
+            <circle cx="8" cy="-24" r="3" fill="var(--text-primary)"/>
+            <path d="M-7 -13 Q0 -6 7 -13" fill="none" stroke="var(--text-primary)" stroke-width="1.6"/>
+            <rect x="-20" y="4" width="40" height="44" rx="18" fill="var(--bg-subtle)" stroke="var(--warning)" stroke-width="1.4"/>
+            <text x="0" y="68" text-anchor="middle" font-size="10.5" fill="var(--text-tertiary)">唐小丫（活泼接梗）</text>
+          </g>
+          <rect x="26" y="308" width="228" height="96" rx="10" fill="var(--bg-surface)" stroke="var(--border-primary)"/>
+          <text x="38" y="328" font-size="9.5" font-weight="600" fill="var(--text-primary)">情景示范（化解怕黑 / 挑食 / 入园焦虑）</text>
+          <text x="38" y="346" font-size="9.5" fill="var(--text-secondary)">唐小丫：「我以前晚上也怕黑，后来给小灯取了名字！」</text>
+          <text x="38" y="364" font-size="9.5" fill="var(--text-secondary)">小伴龙：「小乐，你想给你的夜灯取什么名字呀？」</text>
+          <text x="38" y="386" font-size="8.5" fill="var(--warning)">规则：最多双角色同屏 · 5–8 分钟后礼貌道别</text>
+          ${breathBarSVG(W, H, true, "孩子始终是对话主角 · 轮流注视说话者")}`;
+      } else if (screenId === "companion-float") {
+        inner = `
+          <rect x="20" y="20" width="420" height="270" rx="12" fill="var(--bg-subtle)" stroke="var(--border-secondary)"/>
+          <text x="36" y="42" font-size="10.5" font-weight="600" fill="var(--text-primary)">小伴龙主生态（动画 / 去哪故事 / 宝箱板块）</text>
+          <rect x="34" y="54" width="264" height="170" rx="10" fill="var(--bg-surface)" stroke="var(--border-primary)"/>
+          <text x="166" y="132" text-anchor="middle" font-size="11" fill="var(--text-secondary)">正在体验：去哪故事 / 宝箱小游戏</text>
+          <text x="166" y="152" text-anchor="middle" font-size="9.5" fill="var(--text-tertiary)">常规播放时小伴龙安静缩在角落不打扰</text>
+          <rect x="310" y="54" width="118" height="212" rx="10" fill="var(--bg-surface)" stroke="var(--accent)" stroke-width="1.6"/>
+          ${dragonSVG(369, 128, 0.68, "happy", "")}
+          <text x="369" y="194" text-anchor="middle" font-size="9.5" font-weight="600" fill="var(--accent)">角落伴随态</text>
+          <text x="369" y="211" text-anchor="middle" font-size="8.8" fill="var(--text-secondary)">• 播完聊剧情感受</text>
+          <text x="369" y="226" text-anchor="middle" font-size="8.8" fill="var(--text-secondary)">• 宝箱超时温和拉回</text>
+          <text x="369" y="241" text-anchor="middle" font-size="8.8" fill="var(--text-secondary)">• 轻点即回专属房间</text>
+          <rect x="34" y="234" width="264" height="32" rx="8" fill="var(--accent-soft)" stroke="var(--accent)"/>
+          <text x="166" y="254" text-anchor="middle" font-size="9.5" fill="var(--text-primary)">「玩了好一会儿啦！回房间把刚才的小恐龙画下来吧？」</text>`;
+      } else if (screenId === "memory") {
+        const memItems = [
+          ["L2 档案 · 昵称与年龄", "小乐 · 5 岁（启蒙段）"],
+          ["L2 档案 · 衰减权重兴趣", "海洋动物、太空、画画"],
+          ["L1 摘要 · 未完故事钩子", "飞天蓝鲸鱼冒险（第 2 幕）"],
+        ].map((pair, idx) => `
+          <g transform="translate(34, ${280 + idx * 38})">
+            <rect x="0" y="0" width="212" height="30" rx="6" fill="var(--bg-subtle)" stroke="var(--border-secondary)"/>
+            <text x="8" y="13" font-size="8.5" fill="var(--text-tertiary)">${pair[0]}</text>
+            <text x="8" y="25" font-size="9.2" fill="var(--text-primary)">${pair[1]}</text>
+            <text x="204" y="19" text-anchor="end" font-size="8.5" fill="var(--warning)">删除</text>
+          </g>`).join("");
+
+        inner = `
+          ${topBarSVG(W)}
+          <rect x="22" y="48" width="236" height="184" rx="12" fill="var(--bg-surface)" stroke="var(--accent)" stroke-width="1.4"/>
+          <text x="34" y="68" font-size="9.5" font-weight="600" fill="var(--accent)">儿童端：L1/L2 记忆跨天自然接续</text>
+          ${dragonSVG(82, 142, 0.76, "happy", "")}
+          <rect x="128" y="84" width="120" height="88" rx="10" fill="var(--bg-subtle)" stroke="var(--border-secondary)"/>
+          <text x="136" y="104" font-size="9.2" fill="var(--text-primary)">「小乐来啦！昨天</text>
+          <text x="136" y="120" font-size="9.2" fill="var(--text-primary)">画的飞天蓝鲸鱼，</text>
+          <text x="136" y="136" font-size="9.2" fill="var(--text-primary)">今天要不要带它去</text>
+          <text x="136" y="152" font-size="9.2" fill="var(--text-primary)">月球冒险呀？」</text>
+          <text x="140" y="218" text-anchor="middle" font-size="8.8" fill="var(--text-tertiary)">写入前 PII 强清洗 · Prompt 预算 ≤250 Token</text>
+          <rect x="22" y="246" width="236" height="196" rx="12" fill="var(--bg-surface)" stroke="var(--border-primary)"/>
+          <text x="34" y="266" font-size="10" font-weight="600" fill="var(--text-primary)">家长端：记忆档案（完全可见可控）</text>
+          ${memItems}
+          <rect x="34" y="400" width="212" height="28" rx="6" fill="var(--bg-subtle)" stroke="var(--border-primary)"/>
+          <text x="140" y="418" text-anchor="middle" font-size="9.5" font-weight="600" fill="var(--text-primary)">一键清空所有记忆（5 秒同步抹除）</text>`;
+      } else if (screenId === "guardian-auth") {
+        inner = `
+          <rect x="20" y="22" width="240" height="34" rx="8" fill="var(--bg-subtle)" stroke="var(--border-secondary)"/>
+          <text x="140" y="43" text-anchor="middle" font-size="11" font-weight="600" fill="var(--text-primary)">监护人实名授权与安全初始化</text>
+          <rect x="20" y="68" width="240" height="106" rx="10" fill="var(--bg-surface)" stroke="var(--accent)" stroke-width="1.3"/>
+          <text x="32" y="88" font-size="10" font-weight="600" fill="var(--accent)">1. 监护人明示同意（14 岁以下必选）</text>
+          <text x="32" y="106" font-size="9" fill="var(--text-secondary)">[x] 已阅读《儿童 AI 拟人化互动知情书》</text>
+          <text x="32" y="122" font-size="9" fill="var(--text-secondary)">[x] 同意 AI 身份标识常驻与安全审核</text>
+          <text x="32" y="138" font-size="9" fill="var(--text-secondary)">[x] 禁止虚拟亲属称谓与情感依赖诱导</text>
+          <text x="32" y="158" font-size="8.5" fill="var(--text-tertiary)">监护人手机号实名核验：138****6219（已验证）</text>
+          <rect x="20" y="186" width="240" height="92" rx="10" fill="var(--bg-surface)" stroke="var(--border-primary)"/>
+          <text x="32" y="206" font-size="10" font-weight="600" fill="var(--text-primary)">2. 孩子画像（匹配语速与对话难度）</text>
+          <rect x="32" y="218" width="104" height="24" rx="6" fill="var(--bg-subtle)" stroke="var(--border-secondary)"/>
+          <text x="40" y="234" font-size="9.2" fill="var(--text-primary)">昵称：小乐</text>
+          <rect x="144" y="218" width="104" height="24" rx="6" fill="var(--accent-soft)" stroke="var(--accent)"/>
+          <text x="152" y="234" font-size="9.2" fill="var(--accent)">5–6 岁 · 启蒙段</text>
+          <text x="32" y="264" font-size="8.8" fill="var(--text-tertiary)">可选开启「长期兴趣记忆」与「语音字幕」</text>
+          <rect x="20" y="290" width="240" height="106" rx="10" fill="var(--bg-surface)" stroke="var(--border-primary)"/>
+          <text x="32" y="310" font-size="10" font-weight="600" fill="var(--text-primary)">3. 默认护眼与防沉迷红线</text>
+          <text x="32" y="330" font-size="9.2" fill="var(--text-secondary)">• 每日总时长上限：30 分钟</text>
+          <text x="32" y="348" font-size="9.2" fill="var(--text-secondary)">• 晚安自动休眠：21:00 – 07:00</text>
+          <text x="32" y="366" font-size="9.2" fill="var(--text-secondary)">• 敏感话题拦截：严格级（触发即通知）</text>
+          <text x="32" y="384" font-size="8.5" fill="var(--success)">对齐 2026-07-15 拟人化互动管理暂行办法</text>
+          <rect x="20" y="412" width="240" height="38" rx="10" fill="var(--accent)"/>
+          <text x="140" y="435" text-anchor="middle" font-size="11" font-weight="600" fill="var(--text-on-accent)">完成授权 · 进入儿童极简房间</text>`;
+      } else if (screenId === "parent-whisper") {
+        inner = `
+          <rect x="20" y="20" width="240" height="34" rx="8" fill="var(--bg-subtle)" stroke="var(--border-secondary)"/>
+          <text x="140" y="41" text-anchor="middle" font-size="11" font-weight="600" fill="var(--text-primary)">让小伴龙传话（家长悄悄话）</text>
+          <rect x="20" y="64" width="240" height="74" rx="10" fill="var(--bg-surface)" stroke="var(--border-primary)"/>
+          <text x="32" y="82" font-size="9.5" font-weight="600" fill="var(--text-primary)">快捷场景模板（点击即填）</text>
+          <rect x="32" y="92" width="68" height="20" rx="10" fill="var(--accent-soft)" stroke="var(--accent)"/>
+          <text x="66" y="105" text-anchor="middle" font-size="8.8" fill="var(--accent)">正向表扬</text>
+          <rect x="106" y="92" width="68" height="20" rx="10" fill="var(--bg-subtle)" stroke="var(--border-secondary)"/>
+          <text x="140" y="105" text-anchor="middle" font-size="8.8" fill="var(--text-secondary)">刷牙睡觉</text>
+          <rect x="180" y="92" width="68" height="20" rx="10" fill="var(--bg-subtle)" stroke="var(--border-secondary)"/>
+          <text x="214" y="105" text-anchor="middle" font-size="8.8" fill="var(--text-secondary)">出差想念</text>
+          <text x="32" y="128" font-size="8.5" fill="var(--text-tertiary)">传达方式：[x] 自然融入游戏语气  [ ] 明说妈妈代传</text>
+          <rect x="20" y="148" width="240" height="76" rx="10" fill="var(--bg-surface)" stroke="var(--accent)" stroke-width="1.3"/>
+          <text x="32" y="166" font-size="9.5" font-weight="600" fill="var(--accent)">家长输入（支持语音转文字）</text>
+          <text x="32" y="185" font-size="9.2" fill="var(--text-primary)">「今天小乐打疫苗没哭，夸夸他，</text>
+          <text x="32" y="201" font-size="9.2" fill="var(--text-primary)">顺便提醒他晚上八点半乖乖刷牙。」</text>
+          <text x="32" y="216" font-size="8.3" fill="var(--success)">正向语气校验通过 · 无恐吓/责备词</text>
+          <rect x="20" y="234" width="240" height="82" rx="10" fill="var(--bg-subtle)" stroke="var(--border-secondary)"/>
+          <text x="32" y="252" font-size="9.5" font-weight="600" fill="var(--purple)">小伴龙开口预览（发前可改）</text>
+          <text x="32" y="270" font-size="9.2" fill="var(--text-primary)">「小乐！我听说今天有个超级勇敢的</text>
+          <text x="32" y="286" font-size="9.2" fill="var(--text-primary)">小勇士打针都没哭，是不是你呀？今晚</text>
+          <text x="32" y="302" font-size="9.2" fill="var(--text-primary)">我们比比谁把牙齿刷得像星星一样亮！」</text>
+          <rect x="20" y="326" width="240" height="78" rx="10" fill="var(--bg-surface)" stroke="var(--border-primary)"/>
+          <text x="32" y="345" font-size="9.5" font-weight="600" fill="var(--text-primary)">传话队列与孩子反应回执</text>
+          <text x="32" y="364" font-size="8.8" fill="var(--success)">[已传达] 昨日表扬收拾玩具 → 孩子开心大笑</text>
+          <text x="32" y="381" font-size="8.8" fill="var(--warning)">[待执行] 今晚开场触发 · 支持随时撤回</text>
+          <text x="32" y="396" font-size="8.3" fill="var(--text-tertiary)">严禁 AI 冒充父母身份 · 仅作小伴龙暖心转达</text>
+          <rect x="20" y="416" width="240" height="36" rx="10" fill="var(--accent)"/>
+          <text x="140" y="438" text-anchor="middle" font-size="11" font-weight="600" fill="var(--text-on-accent)">加入下次开场传话队列</text>`;
+      } else if (screenId === "parent-console") {
+        inner = `
+          <rect x="18" y="18" width="424" height="34" rx="8" fill="var(--bg-subtle)" stroke="var(--border-secondary)"/>
+          <text x="32" y="39" font-size="11" font-weight="600" fill="var(--text-primary)">家长全景管控台 · 清晰透明、结构化可控</text>
+          <text x="428" y="39" text-anchor="end" font-size="9" fill="var(--success)">安全状态：正常</text>
+
+          <rect x="18" y="62" width="206" height="106" rx="10" fill="var(--bg-surface)" stroke="var(--border-primary)"/>
+          <text x="30" y="81" font-size="10" font-weight="600" fill="var(--accent)">本周成长周报</text>
+          <text x="30" y="99" font-size="9" fill="var(--text-secondary)">互动 5 天 · 日均 18 分钟（健康）</text>
+          <text x="30" y="115" font-size="9" fill="var(--text-secondary)">兴趣词：蓝鲸 / 恐龙 / 太空 / 画画</text>
+          <text x="30" y="131" font-size="9" fill="var(--text-secondary)">表达亮点：能用因果句描述故事转折</text>
+          <text x="30" y="152" font-size="8.8" fill="var(--success)">亲子建议：睡前可追问蓝鲸去哪了</text>
+
+          <rect x="236" y="62" width="206" height="106" rx="10" fill="var(--bg-surface)" stroke="var(--border-primary)"/>
+          <text x="248" y="81" font-size="10" font-weight="600" fill="var(--purple)">让小伴龙传话 &amp; 作品馆</text>
+          <rect x="248" y="92" width="182" height="26" rx="6" fill="var(--accent-soft)" stroke="var(--accent)"/>
+          <text x="256" y="108" font-size="8.8" fill="var(--accent)">悄悄话：[待执行 1 条 · 夸勇敢打针]</text>
+          <rect x="248" y="124" width="86" height="32" rx="6" fill="var(--bg-subtle)" stroke="var(--border-secondary)"/>
+          <text x="291" y="144" text-anchor="middle" font-size="8.5" fill="var(--text-secondary)">涂鸦原稿/润色</text>
+          <rect x="342" y="124" width="88" height="32" rx="6" fill="var(--bg-subtle)" stroke="var(--purple)"/>
+          <text x="386" y="144" text-anchor="middle" font-size="8.5" fill="var(--purple)">有声绘本(导出PDF)</text>
+
+          <rect x="18" y="178" width="206" height="110" rx="10" fill="var(--bg-surface)" stroke="var(--border-primary)"/>
+          <text x="30" y="197" font-size="10" font-weight="600" fill="var(--warning)">安全边界 · 时长 · 记忆控制</text>
+          <text x="30" y="216" font-size="9" fill="var(--text-secondary)">• 时长：单次 15m / 每日 30m / 21:00 休眠</text>
+          <text x="30" y="233" font-size="9" fill="var(--text-secondary)">• 宝箱超时拉回：[已开启 · 15 分钟触发]</text>
+          <text x="30" y="250" font-size="9" fill="var(--text-secondary)">• 技能权限：画画 / 故事 / 绘本 / 伙伴全开</text>
+          <text x="30" y="268" font-size="9" fill="var(--warning)">• 记忆档案：已存 6 条（查看 / 一键清除）</text>
+
+          <rect x="236" y="178" width="206" height="110" rx="10" fill="var(--bg-surface)" stroke="var(--border-primary)"/>
+          <text x="248" y="197" font-size="10" font-weight="600" fill="var(--success)">透明会员权益与账单</text>
+          <text x="248" y="216" font-size="9" fill="var(--text-secondary)">• 免费版：每日基础语音对话 + 体验画画</text>
+          <text x="248" y="233" font-size="9" fill="var(--text-secondary)">• AI 陪伴会员：不限畅聊 + 连贯绘本 + 伙伴剧场</text>
+          <text x="248" y="250" font-size="9" fill="var(--text-secondary)">• 主 App 老 VIP：一键抵扣升级联合年卡</text>
+          <text x="248" y="268" font-size="8.8" fill="var(--text-tertiary)">续费管理与取消入口同级透明展示</text>`;
+      }
+
+      return `
+        <svg viewBox="0 0 ${W} ${H}" style="width:100%;max-width:${isTablet ? 460 : 290}px;height:auto;display:block;margin:0 auto;" role="img" aria-label="${SCREENS[screenId].title}">
+          <rect x="2" y="2" width="${W - 4}" height="${H - 4}" rx="22" fill="var(--bg-chrome)" stroke="var(--border-primary)" stroke-width="1.6"/>
+          <rect x="8" y="8" width="${W - 16}" height="${H - 16}" rx="16" fill="var(--bg-page)" stroke="var(--border-secondary)" stroke-width="1"/>
+          ${inner}
+        </svg>`;
+    }
+
+    function render() {
+      const mod = MODULES.find((m) => m.id === activeModuleId) || MODULES[0];
+      const scr = SCREENS[activeScreenId] || SCREENS.home;
+
+      document.getElementById("pageCounter").textContent = `${scr.code} / 13`;
+
+      document.getElementById("moduleTabs").innerHTML = MODULES.map((m) => `
+        <button class="pill ${m.id === mod.id ? "active" : ""}" data-mod="${m.id}" type="button">
+          ${m.code} · ${m.name}
+        </button>`).join("");
+
+      document.getElementById("moduleBanner").innerHTML = `
+        <div><strong>${mod.name}</strong> <span class="tagline">· ${mod.tagline}</span></div>
+        <div class="principle">设计原则：${mod.principle}</div>`;
+
+      document.getElementById("screenTabs").innerHTML = mod.screenIds.map((sid) => {
+        const s = SCREENS[sid];
+        return `<button class="pill sm ${sid === scr.id ? "active" : ""}" data-scr="${sid}" type="button">${s.code} ${s.title}</button>`;
+      }).join("");
+
+      document.getElementById("wireframeTitle").textContent = `${scr.code} · ${scr.title}`;
+      document.getElementById("wireframeAudience").textContent = scr.audience;
+      document.getElementById("wireframeHost").innerHTML = renderWireframe(scr.id);
+
+      document.getElementById("specHost").innerHTML = `
+        <div>
+          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:6px;">
+            <h3>${scr.title}</h3>
+            <span class="badge">${scr.audience}</span>
+            <span class="badge">${scr.orientation === "tablet" ? "横屏 / 平板适配" : "竖屏主体验"}</span>
+          </div>
+          <p style="font-size:13.5px;color:var(--text-secondary);">${scr.summary}</p>
+        </div>
+        <div class="spec-box">
+          <div class="spec-box-title">触发与入口时机</div>
+          <p>${scr.trigger}</p>
+        </div>
+        <div class="spec-box">
+          <div class="spec-box-title">核心体验与交互规则</div>
+          <ol>${scr.interactions.map((item) => `<li>${item}</li>`).join("")}</ol>
+        </div>
+        <div class="spec-box">
+          <div class="spec-box-title">Spine 4.2 角色演出与氛围表现</div>
+          <span class="code-inline">${scr.spineNotes}</span>
+        </div>
+        <div class="callout warn">
+          <strong class="title">安全边界与异常兜底</strong>
+          ${scr.guardrails.map((g) => `<p>• ${g}</p>`).join("")}
+        </div>`;
+
+      document.querySelectorAll("[data-mod]").forEach((el) => {
+        el.addEventListener("click", () => {
+          activeModuleId = el.getAttribute("data-mod");
+          const targetMod = MODULES.find((m) => m.id === activeModuleId);
+          if (targetMod && !targetMod.screenIds.includes(activeScreenId)) {
+            activeScreenId = targetMod.screenIds[0];
+          }
+          render();
+        });
+      });
+
+      document.querySelectorAll("[data-scr]").forEach((el) => {
+        el.addEventListener("click", () => {
+          activeScreenId = el.getAttribute("data-scr");
+          activeModuleId = SCREENS[activeScreenId].moduleId;
+          render();
+        });
+      });
+    }
+
+    function stepScreen(delta) {
+      const idx = ALL_ORDER.indexOf(activeScreenId);
+      const next = (idx + delta + ALL_ORDER.length) % ALL_ORDER.length;
+      activeScreenId = ALL_ORDER[next];
+      activeModuleId = SCREENS[activeScreenId].moduleId;
+      render();
+    }
+
+    document.getElementById("matrixBody").innerHTML = FEATURE_MATRIX.map(
+      (row) => `<tr>${row.map((cell) => `<td>${cell}</td>`).join("")}</tr>`
+    ).join("");
+
+    document.getElementById("prevBtn").addEventListener("click", () => stepScreen(-1));
+    document.getElementById("nextBtn").addEventListener("click", () => stepScreen(1));
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowLeft") stepScreen(-1);
+      if (e.key === "ArrowRight") stepScreen(1);
+    });
+
+    document.getElementById("themeBtn").addEventListener("click", () => {
+      const cur = document.documentElement.getAttribute("data-theme");
+      document.documentElement.setAttribute("data-theme", cur === "dark" ? "light" : "dark");
+    });
+
+    document.getElementById("printBtn").addEventListener("click", () => window.print());
+
+    render();
+  </script>
+</body>
+</html>
