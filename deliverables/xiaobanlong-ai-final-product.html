@@ -430,7 +430,6 @@
       color: var(--text-primary);
     }
 
-    /* Ambient SVG animations */
     @keyframes ambientPulse {
       0%, 100% { opacity: 0.45; }
       50% { opacity: 1; }
@@ -459,7 +458,7 @@
       <div>
         <h1>小伴龙 AI · 最终形态产品原型与功能说明书</h1>
         <p class="subtitle">
-          面向 3–8 岁儿童的拟人化 AI 陪伴与共创产品：以全屏 Spine 4.2 活态小伴龙为核心载体，通过自然对话与房间氛围微光唤醒画画、故事、有声绘本与伙伴剧场，并配套完整透明的家长管控台与未成年人合规安全防线。
+          面向 3–8 岁儿童的拟人化 AI 陪伴与共创产品：以全屏 Spine 4.2 活态小伴龙为核心载体，通过分龄话题引导、房间微光唤醒共创技能与分层成长记忆实现自然陪伴，并配套家长悄悄话传话、成长周报与未成年人合规防线。
         </p>
       </div>
       <div class="header-actions">
@@ -472,7 +471,7 @@
       <div class="callout">
         <strong class="title">核心双面体验哲学：儿童端做减法，家长端做透明</strong>
         <p><strong>儿童端（极简无按钮）</strong>：没有菜单栏、功能图标或选项卡片。孩子打开即见活态小伴龙，开口聊天即驱动一切；提到画画或故事时，房间对应物件亮起柔和微光并伴随口语邀请，顺滑展开纯净创作界面。</p>
-        <p><strong>家长端（清晰透明可控）</strong>：通过长按家长锁 + 成人验证进入。完整呈现成长周报、作品与绘本馆、记忆审计、时长/作息/宝箱防沉迷管控，以及零隐藏条款的会员权益体系。</p>
+        <p><strong>家长端（清晰透明可控）</strong>：通过长按家长锁 + 成人验证进入。完整呈现让小伴龙传话（悄悄话）、成长周报、作品与绘本馆、记忆审计、时长/作息/宝箱防沉迷管控与零隐藏会员权益。</p>
       </div>
       <div class="stats-card">
         <div class="stats-label">产品能力规模</div>
@@ -482,7 +481,7 @@
             <div class="stat-name">核心产品模块</div>
           </div>
           <div>
-            <div class="stat-val">12</div>
+            <div class="stat-val">13</div>
             <div class="stat-name">完整体验场景</div>
           </div>
           <div>
@@ -490,8 +489,8 @@
             <div class="stat-name">儿童端菜单按钮</div>
           </div>
           <div>
-            <div class="stat-val">100%</div>
-            <div class="stat-name">记忆与安全可控</div>
+            <div class="stat-val">L0–L2</div>
+            <div class="stat-name">分层脱敏记忆</div>
           </div>
         </div>
       </div>
@@ -501,10 +500,10 @@
 
     <section>
       <div class="section-head">
-        <h2>交互式产品原型（4 大模块 · 12 个最终场景）</h2>
+        <h2>交互式产品原型（4 大模块 · 13 个最终场景）</h2>
         <div class="pager">
           <button class="btn" id="prevBtn" type="button">上一屏</button>
-          <span id="pageCounter">01 / 12</span>
+          <span id="pageCounter">01 / 13</span>
           <button class="btn" id="nextBtn" type="button">下一屏</button>
         </div>
       </div>
@@ -521,7 +520,7 @@
           </div>
           <div class="card-body">
             <div id="wireframeHost"></div>
-            <div class="stage-hint">支持点击上方页签或使用键盘 ← / → 方向键切换全部 12 个场景</div>
+            <div class="stage-hint">支持点击上方页签或使用键盘 ← / → 方向键切换全部 13 个场景</div>
           </div>
         </div>
 
@@ -534,7 +533,7 @@
     <section>
       <h2>全产品功能全景清单</h2>
       <p class="subtitle" style="margin-bottom: 12px;">
-        完整覆盖儿童侧沉浸陪伴、AI 创作技能、生态联动记忆与家长侧安全合规管控 4 大模块。
+        完整覆盖儿童侧沉浸陪伴、AI 创作技能、生态联动记忆与家长侧传话/安全合规管控 4 大模块。
       </p>
       <div class="table-wrap">
         <table>
@@ -555,37 +554,41 @@
     <div class="divider"></div>
 
     <section>
-      <h2 style="margin-bottom: 12px;">底层能力、合规红线与商业权益说明</h2>
+      <h2 style="margin-bottom: 12px;">话题引导机制、大模型记忆架构与技术底座</h2>
       <div class="info-grid">
         <div class="info-card">
-          <h3>统一技术架构：一套云端与音频底座支撑双端体验</h3>
+          <h3>自然语音陪伴：持续对话与话题引导体系</h3>
           <ul>
-            <li><strong>云端 AI 平台</strong>：统一编排对话路由（Orchestrator）、记忆图谱、画画/故事/绘本/伙伴技能引擎与双层内容审核链路。</li>
-            <li><strong>端侧 Native 音频 SDK（iOS / Android）</strong>：封装实时回声消除（AEC）、端侧人声检测（VAD）、全双工 WebSocket 流式收发，保证随时打断与低延迟。</li>
-            <li><strong>跨引擎演出协议</strong>：Spine 4.2 骨骼动画（95 插槽、4 态 Viseme + 8 种情绪嘴型、53 组姿势快照）通过标准 JSON 指令驱动，适配 Flutter 与 Cocos2d-x 端一致呈现。</li>
+            <li><strong>开场不冷场优先级</strong>：家长待执行悄悄话 → 昨日未完故事/画作记忆 → 昼夜/天气/节气趣事 → 角色今日小秘密，绝不干问「你想聊什么」。</li>
+            <li><strong>单轮三步法</strong>：共情复述 + 拟声词画面扩写 + 1 个低门槛轻钩子（二选一 / 猜一猜 / 请孩子出主意），避免连环审问把孩子问懵。</li>
+            <li><strong>冷场阶梯救场</strong>：回「嗯/不知道」时切换为小伴龙求助（「我找了个发光盒子，你帮我猜猜？」）；沉默 8 秒先做趣玩小动作，30 秒转安静待机。</li>
+            <li><strong>聊→猜→编→画→演螺旋</strong>：按兴趣自然衔接技能，保持 8–15 分钟健康专注时长，不靠情感绑架留人。</li>
           </ul>
         </div>
         <div class="info-card">
-          <h3>未成年人合规红线（2026-07-15 暂行办法对齐）</h3>
+          <h3>大模型侧：L0 / L1 / L2 分层记忆处理</h3>
           <ul>
-            <li><strong>监护人明示授权</strong>：14 周岁以下用户必须经监护人实名核验并明确勾选同意后方可启用拟人化互动。</li>
-            <li><strong>身份边界与防情感诱导</strong>：顶部常驻「AI 伙伴」标识；严禁模拟亲属称谓或制造排他性情感依赖，主动把情感联结引回现实家庭。</li>
-            <li><strong>防沉迷与隐私最小化</strong>：强制支持时长与夜间休眠；记忆库自动脱敏 PII 并提供家长一键清空；敏感内容实时熔断并通知监护人。</li>
+            <li><strong>L0 短期会话（Redis，TTL 30m）</strong>：保留当前最近 6–10 轮原话与当前技能状态，负责指代消解与即兴连贯。</li>
+            <li><strong>L1 情节摘要（异步提炼）</strong>：会话结束 5 分钟后由小模型抽取结构化事件与未完钩子，绝不将历史全文塞进 Prompt。</li>
+            <li><strong>L2 正向档案（带权重衰减）</strong>：仅存白名单槽位（昵称、年龄段、≤8 条 14 天衰减兴趣、待传话队列、禁区）；写入前强过 PII 防火墙丢弃住址/学校/全名。</li>
+            <li><strong>低预算 Prompt 组装</strong>：固定系统提示词缓存（~400 Token）+ 结构化记忆与传话（≤250 Token）+ L0 最近轮次，总上下文压在 ~1,200 Token 内。</li>
           </ul>
         </div>
         <div class="info-card">
-          <h3>语音与成本控制策略</h3>
+          <h3>四层统一技术架构（端 · 网 · 云 · 管控中台）</h3>
           <ul>
-            <li><strong>分级路由控本</strong>：日常对话与故事采用级联流式链路（ASR + 轻推理 LLM + 克隆 TTS），自然流畅且单分钟成本可控；高互动情绪场景按需切入全双工高阶链路。</li>
-            <li><strong>生图与绘本精控</strong>：涂鸦润色与绘本分页均采用安全约束轻量化模型并结合家庭配额管理，保证商业毛利健康。</li>
+            <li><strong>1. 客户端渲染层（Flutter / Cocos2d-x）</strong>：Spine 4.2 接收统一 JSON 演出指令（姿势/口型 Viseme/环境物件微光），双端一致呈现。</li>
+            <li><strong>2. 端侧 Native 音频 SDK（iOS / Android）</strong>：封装 AEC 回声消除、端侧 VAD 毫秒级打断信号、Opus 编解码与 WebSocket 全双工长连接。</li>
+            <li><strong>3. 云端实时编排网关（Orchestrator）</strong>：流式 ASR → 前置安全审 → 意图路由 &amp; LLM（流式输出正文 + 动作/物件标签）→ 后置合规护栏 → 流式克隆 TTS，并挂载画画/故事/绘本/多角色插件。</li>
+            <li><strong>4. 记忆与家长中台</strong>：异步记忆提炼管线、家长传话队列与正向改写网关、成长周报聚合与安全熔断 1 分钟告警。</li>
           </ul>
         </div>
         <div class="info-card">
-          <h3>清晰透明的商业化与会员权益</h3>
+          <h3>未成年人合规红线与透明会员权益</h3>
           <ul>
-            <li><strong>免费基础陪伴</strong>：包含每日足量自然语音陪伴 + 限量涂鸦与故事体验，零开屏广告与儿童端付费弹窗。</li>
-            <li><strong>AI 陪伴会员（月卡 / 年卡）</strong>：解锁深度畅聊、高频 AI 一起画与多图连贯有声绘本、多角色伙伴剧场、云端永久作品馆与高清 PDF 导出。</li>
-            <li><strong>主 App 联合权益</strong>：原有小伴龙 VIP 支持差价升级联合年卡，续费与取消入口在家长端同级透明展示。</li>
+            <li><strong>2026-07-15 暂行办法对齐</strong>：14 岁以下监护人实名明示授权、常驻「AI 伙伴」标识、禁虚拟亲属称谓与情感依赖诱导、强制防沉迷与隐私一键清空。</li>
+            <li><strong>控本与分级路由</strong>：常规对话走流式级联链路控本，高情绪互动按需切高阶全双工链路；生图与绘本结合安全模型与配额精控。</li>
+            <li><strong>透明会员权益</strong>：免费日常陪伴零广告零儿童弹窗；AI 陪伴会员解锁深度畅聊、连贯绘本、伙伴剧场与高清 PDF 导出，老 VIP 支持差价升级联合年卡。</li>
           </ul>
         </div>
       </div>
@@ -598,8 +601,8 @@
         id: "companion",
         code: "M1",
         name: "自然语音陪伴",
-        tagline: "全屏活态角色、全双工随时打断、无按钮氛围引导与温和作息收尾",
-        principle: "儿童端零菜单栏、零功能图标、零文字输入，一切交互由语音与房间微光自然驱动。",
+        tagline: "全屏活态角色、分龄话题引导、全双工随时打断、无按钮氛围浮现与温和作息收尾",
+        principle: "儿童端零菜单栏、零功能图标、零文字输入；靠好奇心、小秘密与轻松提问吸引孩子持续开口。",
         screenIds: ["home", "dialogue", "ambient", "bedtime"],
       },
       {
@@ -614,17 +617,17 @@
         id: "ecosystem",
         code: "M3",
         name: "生态联动与成长记忆",
-        tagline: "主内容生态伴随、沉迷温和拉回、跨天兴趣记忆与主动延展对话",
+        tagline: "主内容生态伴随、沉迷温和拉回、分层长期记忆与跨天自然接续",
         principle: "小伴龙在陪伴房间与动画/去哪/宝箱之间保持统一身份与连续记忆，陪伴不割裂。",
         screenIds: ["companion-float", "memory"],
       },
       {
         id: "parent",
         code: "M4",
-        name: "家长透明管控与合规",
-        tagline: "监护人实名授权、安全防线、成长周报、作品馆、记忆审计与会员权益",
-        principle: "家长端信息完整透明、操控清晰直接，把教育价值、安全边界与会员权益完整呈现。",
-        screenIds: ["guardian-auth", "parent-console"],
+        name: "家长透明管控与传话",
+        tagline: "监护人实名授权、让小伴龙传话（悄悄话）、安全防线、成长周报、作品馆与会员权益",
+        principle: "家长端信息完整透明、操控清晰直接，既是安全护栏也是温和的亲子沟通桥梁。",
+        screenIds: ["guardian-auth", "parent-whisper", "parent-console"],
       },
     ];
 
@@ -636,13 +639,13 @@
         title: "极简伴随房间主屏",
         audience: "儿童端",
         orientation: "phone",
-        summary: "孩子打开应用即进入小伴龙的立体房间，没有导航栏、活动弹窗或技能按钮，开口就能聊。",
+        summary: "孩子打开应用即进入小伴龙的立体房间，没有导航栏、活动弹窗或技能按钮；开场自动带入自然话题钩子，开口就能聊。",
         trigger: "完成监护人授权后默认进入；任何技能结束后平滑退回本页。",
         interactions: [
           "画面主体为全屏 Spine 4.2 小伴龙，待机保持自然呼吸、随机眨眼与眼神随动。",
+          "智能开场优先级：① 家长待执行的「悄悄话传话」→ ② 昨日未完故事/作品记忆 → ③ 真实天气/昼夜/节气小趣事 → ④ 小伴龙自带今日小秘密，绝不干巴巴问「你想聊什么」。",
           "房间内静默陈列 4 件环境物件：画笔筒、魔法书架、小窗户、小茶几，平时不带文字标签。",
-          "顶部仅保留极弱化家长锁（长按 3 秒 + 成人算术验证）与常驻合规标识「AI 伙伴」。",
-          "底部仅一条柔和语音呼吸光带：待听时慢呼吸，收音时随音量波动，无需按键说话。",
+          "顶部仅保留极弱化家长锁（长按 3 秒 + 成人算术验证）与常驻合规标识「AI 伙伴」；底部仅一条柔和语音呼吸光带。",
         ],
         spineNotes: "idle_breath 循环 + blink 随机触发 + 3 层眼头微随动；环境光随真实昼夜时段微调。",
         guardrails: [
@@ -654,21 +657,21 @@
         id: "dialogue",
         moduleId: "companion",
         code: "02",
-        title: "全双工对话与思考演出",
+        title: "全双工对话与话题引导引擎",
         audience: "儿童端",
         orientation: "phone",
-        summary: "支持孩子随时插话打断，思考阶段用自然动作与短口头禅平滑掩蔽云端推理延迟。",
+        summary: "支持随时插话打断；通过「共情回应 + 画面扩写 + 轻钩子」与冷场阶梯救场机制，让 3–8 岁孩子越聊越想说。",
         trigger: "设备端 VAD 检测到儿童人声即进入倾听与全双工交互态。",
         interactions: [
-          "端侧回声消除（AEC）持续工作，小伴龙说话时孩子随时插嘴可毫秒级停嘴转向倾听。",
-          "推理超过 450ms 自动触发思考演出：歪头轻眨眼、头顶浮现极淡光圈涟漪，并自然吐出「嗯我想想呀」等短填充语。",
-          "回答时口型实时同步 4 态 Viseme 与 8 种情绪嘴型，语速与句长按孩子年龄段自动适配（3–5 岁短句，6–8 岁展开）。",
-          "屏幕不堆叠聊天气泡墙，仅在低识别置信度或家长开启字幕辅助时底部轻浮单句大字。",
+          "每轮回应遵循三步法：先复述肯定孩子的话 + 用拟声词/画面感扩写 + 抛 1 个低门槛轻钩子（二选一/猜一猜/请孩子帮忙拿主意），单轮绝不连环提问。",
+          "分龄节奏自动适配：3–4 岁每轮 ≤25 字配叠词与二选一；5–6 岁 30–50 字引导想象；7–8 岁支持「为什么」追问链与脑筋急转弯共创。",
+          "冷场与短答救场：孩子回「嗯/不知道」时，小伴龙抛出自带小事件（「我刚捡到一颗发光石头，你猜里面藏了什么？」），把孩子变成帮小伴龙出主意的「小老师」；沉默 8 秒先做趣味小动作吸引发问，30 秒入安静待机。",
+          "端侧回声消除（AEC）支持毫秒级打断；推理超 450ms 自动触发歪头眨眼 + 暖光涟漪 + 短口头禅掩蔽延迟。",
         ],
         spineNotes: "listen_lean -> think_tilt -> speak_viseme(zui01/02/05/03) + 53 组姿势快照动态组合。",
         guardrails: [
-          "禁止使用「爸爸/妈妈/宝宝/最爱我」等虚拟亲属或排他情感诱导话术。",
-          "触发敏感词、危险模仿或隐私套话时毫秒级熔断，改由温和转移话题并记录家长端。",
+          "吸引持续对话只靠好奇心、想象力与成就感，严禁「你不陪我我就难过/只有我懂你」等情感诱导。",
+          "禁止虚拟亲属称谓；触发敏感词、危险模仿或隐私套话时毫秒级熔断，温和转题并记录家长端。",
         ],
       },
       ambient: {
@@ -678,7 +681,7 @@
         title: "氛围自然浮现引导",
         audience: "儿童端",
         orientation: "phone",
-        summary: "技能不以功能菜单出现，而是当对话提到相关意图时，房间物件自然亮起微光并发出口语邀请。",
+        summary: "把单向聊天自然升级为「聊 → 猜 → 编 → 画 → 演」的趣味螺旋：对话触发技能意图时，房间物件亮起微光并发出口语邀请。",
         trigger: "对话识别到画画、讲故事、看绘本、叫小伙伴等意图，或孩子主动轻触房间物件。",
         interactions: [
           "例：孩子说「我想画一只会飞的鲸鱼」，角落画笔筒泛起柔和微光涟漪，其余环境略微柔暗聚焦。",
@@ -783,7 +786,7 @@
         audience: "儿童端",
         orientation: "phone",
         summary: "唐小丫、熊小豆等经典 IP 伙伴可应邀来到房间做客，用多角色自然接梗与情景剧陪伴化解日常小情绪。",
-        trigger: "孩子提及想见某个伙伴，或家长在周报/管控台中勾选「睡前刷牙/分享玩具/克服怕黑」等引导主题。",
+        trigger: "孩子提及想见某个伙伴，或家长在「让小伴龙传话 / 管控台」中勾选生活引导主题。",
         interactions: [
           "门铃轻响、房间门轻推开，伙伴带着专属音色与 Spine 动画入场，与小伴龙一唱一和自然对话。",
           "多角色明确分工：小伴龙负责温暖倾听与共情，唐小丫活泼好奇、熊小豆憨厚鼓励，孩子始终是对话中心。",
@@ -821,20 +824,21 @@
         id: "memory",
         moduleId: "ecosystem",
         code: "10",
-        title: "成长记忆与跨天自然接续",
+        title: "分层成长记忆与跨天自然接续",
         audience: "双端协同",
         orientation: "phone",
-        summary: "小伴龙记得孩子的昵称、近期迷恋的主题与昨天未讲完的冒险，次日见面主动自然接茬；所有记忆对家长完全透明可控。",
-        trigger: "跨天再次进入房间时自动读取已授权的长期兴趣记忆摘要。",
+        summary: "大模型通过 L0 短期会话 + L1 情节摘要 + L2 结构化正向档案三层记忆协同，让小伴龙记得住兴趣与故事，同时严格脱敏且对家长完全透明。",
+        trigger: "会话结束异步提炼记忆；跨天进入房间时按低 Token 预算动态注入开场上下文。",
         interactions: [
           "次日打开应用，小伴龙自然寒暄：「小乐来啦！昨天我们画的那只蓝鲸鱼，今天要不要看看它飞去哪颗星球了？」",
-          "仅提取儿童成长正向标签（昵称、年龄段、兴趣主题、近期作品、未完故事线），不记录家庭住址、学校、真实全名等敏感隐私。",
-          "家长端「记忆档案」以可读卡片展示全部已记住的条目，支持逐条删除、一键清空或关闭长期记忆功能。",
+          "L0/L1/L2 分层治理：L0 存最近 6–10 轮会话；L1 会话后异步抽情节摘要与未完钩子；L2 只存受控正向槽位（昵称、年龄段、≤8 条带时间衰减权重兴趣、偏好伙伴）。",
+          "写入前强过 PII 防火墙，自动丢弃真实全名、学校、住址、手机号等隐私，绝不把原始历史全文塞进 Prompt。",
+          "家长端「记忆档案」可读卡片完整呈现已记住条目，支持逐条删改、一键清空或总开关关闭（5 秒内同步抹除）。",
         ],
         spineNotes: "welcome_back_wave + recall_sparkle（轻微星星闪烁提示，不出现技术术语）。",
         guardrails: [
-          "严格执行个人信息最小化原则，端云传输全程加密，自动脱敏姓名/手机号/定位等 PII 信息。",
-          "一键清空记忆后，云端向量与摘要 5 秒内同步抹除，小伴龙立刻回归无历史记忆状态。",
+          "兴趣标签支持自然衰减（14 天未提自动降权）与冲突覆写（孩子偏好变化即时更新），避免「复读机式」过时记忆。",
+          "记忆注入严格控制在 ~250 Token 预算内，与系统提示词缓存协同，不拖慢首字延迟。",
         ],
       },
       "guardian-auth": {
@@ -848,7 +852,7 @@
         trigger: "首次开启 AI 陪伴功能或未满 14 周岁账号首次登录时必经。",
         interactions: [
           "步骤 1：监护人身份核验与《儿童 AI 拟人化互动知情同意书》明示勾选（含 AI 身份说明、语音与作品存储规则、记忆开关）。",
-          "步骤 2：设置孩子昵称、年龄段（3–4 岁 / 5–6 岁 / 7–8 岁）与默认语音速度，用于自动匹配表达难度。",
+          "步骤 2：设置孩子昵称、年龄段（3–4 岁 / 5–6 岁 / 7–8 岁）与默认语音速度，用于自动匹配对话深度。",
           "步骤 3：一次性确认每日陪伴时长上限、就寝自动休眠时段与内容安全级别（标准 / 严格）。",
           "全部完成后自动切换至儿童极简伴随房间，家长端此后需通过成人算术锁进入。",
         ],
@@ -858,22 +862,43 @@
           "默认开启「防情感依赖边界」「敏感话题熔断」与「夜间休眠」，不允许儿童侧自行修改。",
         ],
       },
+      "parent-whisper": {
+        id: "parent-whisper",
+        moduleId: "parent",
+        code: "12",
+        title: "让小伴龙传话（家长悄悄话任务）",
+        audience: "双端协同",
+        orientation: "phone",
+        summary: "家长用一句话或快捷模板托小伴龙带话（如表扬今天勇敢打针、提醒睡前刷牙、出差传达想念），小伴龙以游戏化自然口吻在下次对话中无缝融入。",
+        trigger: "家长在管控台输入或语音录入悄悄话，设定触发时机（下次开场 / 今晚睡前），送达后向家长回传孩子反应摘要。",
+        interactions: [
+          "支持 4 类高频快捷模板：正向表扬（「今天自己收拾玩具很棒」）、习惯提醒（「该去刷牙啦」）、情绪安抚（「爸爸出差周五大后天回来」）、好奇探索（「聊聊刚去过的动物园」）。",
+          "支持两种传达语气：明说代传（「妈妈让我悄悄告诉你，她今天超想你！」）或自然融入（「小伴龙刚刷完亮晶晶的牙，小乐要不要比赛谁刷得更干净？」）。",
+          "小伴龙在合适语境自然执行后，自动标记「已传达」并在家长端回传孩子当时的口头反应摘要。",
+          "家长可预览 AI 改写后的儿童友好话术，确认后再下发，也可随时撤回未执行的传话。",
+        ],
+        spineNotes: "whisper_lean + sparkle_secret（凑近眨眼讲悄悄话的小动作），孩子响应后给予鼓掌鼓励。",
+        guardrails: [
+          "严格正向表达过滤：若家长输入责备、恐吓或愧疚诱导话术（如「不听话不要你了」），系统自动提示并改写为温和正向表达后方可下发。",
+          "小伴龙始终以「AI 好朋友」身份代为转达或趣味引导，严禁冒充家长本人身份说话。",
+        ],
+      },
       "parent-console": {
         id: "parent-console",
         moduleId: "parent",
-        code: "12",
+        code: "13",
         title: "家长全景管控台、成长周报与权益中心",
         audience: "家长端",
         orientation: "tablet",
-        summary: "家长端信息完整、结构清晰：集中承载安全时长管控、每周成长洞察、作品绘本馆、记忆审计与透明会员权益。",
+        summary: "家长端信息完整、结构清晰：集中承载让小伴龙传话入口、安全时长管控、每周成长洞察、作品绘本馆、记忆审计与透明会员权益。",
         trigger: "长按儿童端右上角家长锁 3 秒并完成成人验证，或从独立家长端入口进入。",
         interactions: [
           "【成长周报】：展示本周互动时长、核心兴趣词云（如海洋动物、画画、太空）、语言表达亮点与 2 条高质量亲子延伸话题建议。",
+          "【让小伴龙传话快捷入口】：一键发起悄悄话任务，查看待执行队列与孩子已传达反应反馈。",
           "【作品与绘本馆】：按时间线归档所有共创涂鸦（原稿 + 润色稿）与有声绘本，支持音频回放、微信分享海报与高清 PDF 导出。",
-          "【安全与记忆管控】：单次/每日时长滑块、就寝时间段、宝箱超时拉回开关、话题禁区白/黑名单、安全事件通知与记忆库一键清除。",
-          "【透明权益中心】：清晰对比「免费日常陪伴」与「AI 陪伴会员 / 联合年卡」额度，支持原小伴龙 VIP 优惠升级，零隐藏自动续费陷阱。",
+          "【安全记忆与透明权益】：单次/每日时长、就寝窗口、宝箱超时拉回开关、记忆库逐条删除/一键清空、原小伴龙 VIP 优惠升级与同级退订入口。",
         ],
-        spineNotes: "纯信息型家长界面，无儿童动画干扰；所有管控修改实时同步至云端与儿童端。",
+        spineNotes: "纯信息型家长界面，无儿童动画干扰；所有管控修改与传话任务实时同步至云端与儿童端。",
         guardrails: [
           "安全熔断触发时 1 分钟内向家长推送摘要提醒与应对建议，避免黑盒交互。",
           "会员购买、续费管理与取消入口同级透明展示，杜绝诱导扣费投诉。",
@@ -883,17 +908,17 @@
 
     const FEATURE_MATRIX = [
       ["M1 自然语音陪伴", "全屏极简活态陪伴房间", "Spine 4.2 全屏小伴龙 + 隐形房间物件 + 底部呼吸光带，无菜单栏与文字输入", "年龄段语速预设、AI 身份常驻标识、昼夜光影同步", "Spine 4.2 骨骼动画（95 插槽 / 53 姿势）+ 统一端云演出指令协议"],
+      ["M1 自然语音陪伴", "话题引导与持续对话引擎", "智能开场不冷场；每轮「共情+扩写+轻钩子」；短答/沉默时用角色小秘密与小动作自然破冰", "分龄难度档（3–4 / 5–6 / 7–8 岁）、话题禁区与偏好配置", "分龄对话策略模板 + 冷场阶梯状态机 + 低门槛互动钩子库"],
       ["M1 自然语音陪伴", "全双工随时插话与思考掩蔽", "说话可毫秒级打断；思考时歪头眨眼 + 暖光涟漪 + 短口头禅自然衔接", "对话摘要抽检、可选字幕开关、静默自动待机", "Native iOS/Android 音频 SDK（AEC 回声消除 + 端侧 VAD + 流式 ASR/TTS）"],
-      ["M1 自然语音陪伴", "氛围自然浮现引导", "对话触发环境物件微光涟漪 + 口语邀请，点头/口头同意或轻点即进入技能", "可单独开关各项 AI 技能权限，免费配额耗尽不向儿童弹付费页", "云端意图路由（Orchestrator）+ 房间物件状态机指令下发"],
-      ["M1 自然语音陪伴", "晚安仪式与温和防沉迷", "临近限时自动转星空夜色、小伴龙打哈欠道晚安后平滑休眠；20 分钟护眼微互动", "单次/每日时长上限、就寝锁屏窗口、休眠强锁开关", "云端计时器 + 客户端本地兜底锁屏状态机"],
+      ["M1 自然语音陪伴", "氛围自然浮现与晚安防沉迷", "对话触发环境物件微光邀请进入技能；临近限时转星空夜色、打哈欠道晚安后平滑休眠", "技能权限开关、单次/每日时长上限、就寝锁屏窗口、20 分钟护眼微互动", "云端意图路由（Orchestrator）+ 房间物件状态机 + 本地兜底锁屏"],
       ["M2 AI 共创技能", "AI 一起画（零按钮画布）", "纯净白纸落指即画 + 语音换色/共创补全 + 绘本风润色 + 30 秒画中故事", "原稿与润色稿双存档、作品分享海报与高清下载", "多模态看图理解 + 安全约束绘本生图模型 + 语音控笔指令"],
       ["M2 AI 共创技能", "AI 互动听写故事", "魔法书架氛围分幕讲述，每幕口语抛悬念由孩子自由口述决定下一幕剧情", "故事主题偏好、睡前舒缓模式、完整故事文本回看", "儿童故事大纲编排器 + 情绪化克隆音色（31 维情感参考）"],
       ["M2 AI 共创技能", "多图连贯有声绘本", "涂鸦与口述自动装订成 4–6 页专属有声绘本，支持语音翻页与小伴龙朗读", "永久云端绘本馆、一键导出高清打印版 PDF、全家分享", "角色外观一致性锚点生图 + 分页版式合成 + 音频轨道封装"],
       ["M2 AI 共创技能", "伙伴串门与多角色情景剧", "唐小丫 / 熊小豆串门做客，多音色接梗演绎情景剧，温和共情日常小情绪", "勾选生活习惯引导主题（刷牙/分享/怕黑等），负面情绪及时同步家长", "多角色音色克隆 + 双角色轮流注视/台词编排引擎"],
       ["M3 生态联动与记忆", "全生态伴随与游戏温和拉回", "动画/去哪/宝箱角落静默伴随；播完聊剧情；沉迷宝箱超时时温和拉回创作房间", "开关「宝箱超时拉回」及触发时长阈值，查看各模块耗时占比", "跨引擎统一协议（Flutter / Cocos2d-x 共用 Native SDK 与云端服务）"],
-      ["M3 生态联动与记忆", "成长记忆与跨天自然接续", "记住昵称、近期兴趣与未完故事，次日见面主动自然接茬", "家长记忆档案逐条查看、删除、一键清空或总开关关闭", "PII 自动脱敏过滤器 + 结构化正向兴趣记忆图谱"],
-      ["M4 家长管控与合规", "监护人授权与拟人化合规盾", "AI 身份常驻标识、禁止虚拟亲属称谓与情感绑架、敏感话题毫秒级柔和转移", "14 岁以下监护人实名明示授权、安全级别切换、异常触发 1 分钟告警", "对齐 2026-07-15《人工智能拟人化互动服务管理暂行办法》双层审核链路"],
-      ["M4 家长管控与合规", "成长周报与透明会员权益", "儿童端零广告、零充值弹窗、零自动续费诱导", "每周兴趣词云与表达亮点、亲子话题卡、清晰透明的免费/会员权益与退订入口", "周度对话语义聚合引擎 + 原主 App VIP 权益打通账务体系"],
+      ["M3 生态联动与记忆", "L0/L1/L2 分层成长记忆", "记住昵称、近期兴趣与未完故事，次日见面主动自然接茬，兴趣变化自动更新", "记忆档案逐条查看/删除、一键清空（5 秒同步抹除）或关闭长期记忆", "Redis 短期会话 + 异步摘要提炼 + 结构化衰减档案 + PII 写入前防火墙"],
+      ["M4 家长管控与传话", "让小伴龙传话（家长悄悄话）", "小伴龙以自然口吻或游戏化方式传达表扬、刷牙提醒或思念，不暴露说教感", "4 类快捷模板、明说/融入双语气、AI 改写预览、已传达回执与随时撤回", "正向表达安全改写网关 + 传话任务队列（高优先级注入下次开场 Prompt）"],
+      ["M4 家长管控与传话", "监护人授权、安全盾与成长周报", "AI 身份常驻标识、零广告零弹窗、敏感话题毫秒级柔和转移", "14 岁以下实名授权、安全熔断 1 分钟告警、每周兴趣词云与透明会员权益", "对齐 2026-07-15 暂行办法双层审核链路 + 周度语义聚合引擎"],
     ];
 
     const ALL_ORDER = MODULES.flatMap((m) => m.screenIds);
@@ -958,36 +983,40 @@
       if (screenId === "home") {
         inner = `
           ${topBarSVG(W)}
-          <rect x="28" y="62" width="64" height="54" rx="8" fill="var(--bg-subtle)" stroke="var(--border-secondary)"/>
-          <line x1="60" y1="62" x2="60" y2="116" stroke="var(--border-secondary)"/>
-          <line x1="28" y1="89" x2="92" y2="89" stroke="var(--border-secondary)"/>
-          <text x="60" y="130" text-anchor="middle" font-size="8.5" fill="var(--text-tertiary)">昼夜窗景</text>
-          <rect x="196" y="66" width="54" height="68" rx="6" fill="var(--bg-subtle)" stroke="var(--border-secondary)"/>
-          <line x1="202" y1="88" x2="244" y2="88" stroke="var(--border-secondary)"/>
-          <line x1="202" y1="110" x2="244" y2="110" stroke="var(--border-secondary)"/>
-          <text x="223" y="147" text-anchor="middle" font-size="8.5" fill="var(--text-tertiary)">静默书架</text>
-          <line x1="18" y1="345" x2="${W - 18}" y2="345" stroke="var(--border-secondary)" stroke-dasharray="4 4"/>
-          <rect x="208" y="306" width="30" height="36" rx="5" fill="var(--bg-subtle)" stroke="var(--border-secondary)"/>
-          <line x1="216" y1="294" x2="218" y2="306" stroke="var(--border-primary)" stroke-width="1.4"/>
-          <line x1="226" y1="290" x2="224" y2="306" stroke="var(--border-primary)" stroke-width="1.4"/>
-          <text x="223" y="358" text-anchor="middle" font-size="8.5" fill="var(--text-tertiary)">画笔筒(隐形)</text>
-          ${dragonSVG(132, 248, 1.32, "normal", "全屏 Spine 4.2 小伴龙")}
-          <rect x="44" y="382" width="192" height="26" rx="6" fill="var(--bg-subtle)" stroke="var(--border-secondary)"/>
-          <text x="140" y="398" text-anchor="middle" font-size="9.5" fill="var(--text-secondary)">无菜单栏 · 无技能按钮 · 开口即聊</text>
-          ${breathBarSVG(W, H, false, "底部柔和语音呼吸光带（待机慢呼吸）")}`;
+          <rect x="28" y="56" width="64" height="48" rx="8" fill="var(--bg-subtle)" stroke="var(--border-secondary)"/>
+          <line x1="60" y1="56" x2="60" y2="104" stroke="var(--border-secondary)"/>
+          <line x1="28" y1="80" x2="92" y2="80" stroke="var(--border-secondary)"/>
+          <text x="60" y="118" text-anchor="middle" font-size="8.5" fill="var(--text-tertiary)">昼夜窗景</text>
+          <rect x="196" y="56" width="54" height="62" rx="6" fill="var(--bg-subtle)" stroke="var(--border-secondary)"/>
+          <line x1="202" y1="76" x2="244" y2="76" stroke="var(--border-secondary)"/>
+          <line x1="202" y1="96" x2="244" y2="96" stroke="var(--border-secondary)"/>
+          <text x="223" y="131" text-anchor="middle" font-size="8.5" fill="var(--text-tertiary)">静默书架</text>
+          <line x1="18" y1="336" x2="${W - 18}" y2="336" stroke="var(--border-secondary)" stroke-dasharray="4 4"/>
+          <rect x="208" y="298" width="30" height="36" rx="5" fill="var(--bg-subtle)" stroke="var(--border-secondary)"/>
+          <line x1="216" y1="286" x2="218" y2="298" stroke="var(--border-primary)" stroke-width="1.4"/>
+          <line x1="226" y1="282" x2="224" y2="298" stroke="var(--border-primary)" stroke-width="1.4"/>
+          <text x="223" y="350" text-anchor="middle" font-size="8.5" fill="var(--text-tertiary)">画笔筒(隐形)</text>
+          ${dragonSVG(130, 238, 1.26, "happy", "全屏 Spine 4.2 小伴龙")}
+          <rect x="26" y="364" width="228" height="54" rx="8" fill="var(--bg-surface)" stroke="var(--accent)" stroke-width="1.2"/>
+          <text x="36" y="381" font-size="9.2" font-weight="600" fill="var(--accent)">智能破冰开场（无菜单按钮）</text>
+          <text x="36" y="397" font-size="9" fill="var(--text-primary)">「小乐！外面下雨咚咚响，昨晚的</text>
+          <text x="36" y="411" font-size="9" fill="var(--text-primary)">蓝鲸鱼有没有带上小雨伞呀？」</text>
+          ${breathBarSVG(W, H, false, "底部柔和语音呼吸光带（免按键说话）")}`;
       } else if (screenId === "dialogue") {
         inner = `
           ${topBarSVG(W)}
-          <circle cx="140" cy="168" r="58" fill="none" stroke="var(--accent)" stroke-width="1.2" stroke-dasharray="4 4" class="svg-pulse"/>
-          <circle cx="140" cy="168" r="76" fill="none" stroke="var(--border-secondary)" stroke-width="1" stroke-dasharray="3 5"/>
-          <rect x="64" y="68" width="152" height="28" rx="14" fill="var(--bg-subtle)" stroke="var(--accent)"/>
-          <text x="140" y="86" text-anchor="middle" font-size="10" fill="var(--text-primary)">思考填充：「嗯，我想想呀…」</text>
-          ${dragonSVG(140, 222, 1.28, "think", "歪头眨眼 + Viseme 口型同步")}
-          <rect x="30" y="332" width="220" height="58" rx="10" fill="var(--bg-surface)" stroke="var(--border-primary)"/>
-          <text x="42" y="351" font-size="10" font-weight="600" fill="var(--text-primary)">全双工端侧 AEC / VAD</text>
-          <text x="42" y="367" font-size="9.5" fill="var(--text-secondary)">• 孩子随时插话 → 毫秒级停嘴切倾听</text>
-          <text x="42" y="381" font-size="9.5" fill="var(--text-secondary)">• 敏感/越界内容 → 实时熔断温和转题</text>
-          ${breathBarSVG(W, H, true, "声波光带实时随人声起伏（免按键）")}`;
+          <circle cx="140" cy="156" r="54" fill="none" stroke="var(--accent)" stroke-width="1.2" stroke-dasharray="4 4" class="svg-pulse"/>
+          <rect x="44" y="54" width="192" height="38" rx="12" fill="var(--bg-subtle)" stroke="var(--accent)"/>
+          <text x="140" y="70" text-anchor="middle" font-size="9.2" font-weight="600" fill="var(--accent)">三步法：共情 + 画面扩写 + 轻钩子</text>
+          <text x="140" y="84" text-anchor="middle" font-size="9" fill="var(--text-primary)">「霸王龙咚咚响！它想找果子还是赛跑？」</text>
+          ${dragonSVG(140, 208, 1.15, "think", "歪头思考掩蔽 + 随时插话打断")}
+          <rect x="24" y="308" width="232" height="106" rx="10" fill="var(--bg-surface)" stroke="var(--border-primary)"/>
+          <text x="36" y="327" font-size="9.8" font-weight="600" fill="var(--text-primary)">持续吸引对话与冷场救场策略</text>
+          <text x="36" y="345" font-size="9" fill="var(--text-secondary)">• 分龄句长：3–4岁 ≤25字 / 5–6岁 30–50字</text>
+          <text x="36" y="362" font-size="9" fill="var(--text-secondary)">• 回「不知道」→ 抛角色小秘密请孩子出主意</text>
+          <text x="36" y="379" font-size="9" fill="var(--text-secondary)">• 沉默 8s 做小动作逗趣；30s 进安静待机</text>
+          <text x="36" y="396" font-size="8.8" fill="var(--success)">• 端侧 AEC 随时插嘴 · 拒绝情感绑架诱导</text>
+          ${breathBarSVG(W, H, true, "全双工声波光带 · 单轮最多 1 个轻问题")}`;
       } else if (screenId === "ambient") {
         inner = `
           ${topBarSVG(W)}
@@ -1114,9 +1143,9 @@
           <text x="166" y="254" text-anchor="middle" font-size="9.5" fill="var(--text-primary)">「玩了好一会儿啦！回房间把刚才的小恐龙画下来吧？」</text>`;
       } else if (screenId === "memory") {
         const memItems = [
-          ["昵称与年龄", "小乐 · 5 岁"],
-          ["近期兴趣", "海洋动物、太空、画画"],
-          ["未完故事线", "飞天蓝鲸鱼冒险（第 2 幕）"],
+          ["L2 档案 · 昵称与年龄", "小乐 · 5 岁（启蒙段）"],
+          ["L2 档案 · 衰减权重兴趣", "海洋动物、太空、画画"],
+          ["L1 摘要 · 未完故事钩子", "飞天蓝鲸鱼冒险（第 2 幕）"],
         ].map((pair, idx) => `
           <g transform="translate(34, ${280 + idx * 38})">
             <rect x="0" y="0" width="212" height="30" rx="6" fill="var(--bg-subtle)" stroke="var(--border-secondary)"/>
@@ -1128,19 +1157,19 @@
         inner = `
           ${topBarSVG(W)}
           <rect x="22" y="48" width="236" height="184" rx="12" fill="var(--bg-surface)" stroke="var(--accent)" stroke-width="1.4"/>
-          <text x="34" y="68" font-size="9.5" font-weight="600" fill="var(--accent)">儿童端：次日自然接续</text>
+          <text x="34" y="68" font-size="9.5" font-weight="600" fill="var(--accent)">儿童端：L1/L2 记忆跨天自然接续</text>
           ${dragonSVG(82, 142, 0.76, "happy", "")}
           <rect x="128" y="84" width="120" height="88" rx="10" fill="var(--bg-subtle)" stroke="var(--border-secondary)"/>
           <text x="136" y="104" font-size="9.2" fill="var(--text-primary)">「小乐来啦！昨天</text>
           <text x="136" y="120" font-size="9.2" fill="var(--text-primary)">画的飞天蓝鲸鱼，</text>
           <text x="136" y="136" font-size="9.2" fill="var(--text-primary)">今天要不要带它去</text>
           <text x="136" y="152" font-size="9.2" fill="var(--text-primary)">月球冒险呀？」</text>
-          <text x="140" y="218" text-anchor="middle" font-size="8.8" fill="var(--text-tertiary)">只记兴趣与作品 · 绝不采集隐私 PII</text>
+          <text x="140" y="218" text-anchor="middle" font-size="8.8" fill="var(--text-tertiary)">写入前 PII 强清洗 · Prompt 预算 ≤250 Token</text>
           <rect x="22" y="246" width="236" height="196" rx="12" fill="var(--bg-surface)" stroke="var(--border-primary)"/>
           <text x="34" y="266" font-size="10" font-weight="600" fill="var(--text-primary)">家长端：记忆档案（完全可见可控）</text>
           ${memItems}
           <rect x="34" y="400" width="212" height="28" rx="6" fill="var(--bg-subtle)" stroke="var(--border-primary)"/>
-          <text x="140" y="418" text-anchor="middle" font-size="9.5" font-weight="600" fill="var(--text-primary)">一键清空所有记忆 / 关闭记忆功能</text>`;
+          <text x="140" y="418" text-anchor="middle" font-size="9.5" font-weight="600" fill="var(--text-primary)">一键清空所有记忆（5 秒同步抹除）</text>`;
       } else if (screenId === "guardian-auth") {
         inner = `
           <rect x="20" y="22" width="240" height="34" rx="8" fill="var(--bg-subtle)" stroke="var(--border-secondary)"/>
@@ -1152,7 +1181,7 @@
           <text x="32" y="138" font-size="9" fill="var(--text-secondary)">[x] 禁止虚拟亲属称谓与情感依赖诱导</text>
           <text x="32" y="158" font-size="8.5" fill="var(--text-tertiary)">监护人手机号实名核验：138****6219（已验证）</text>
           <rect x="20" y="186" width="240" height="92" rx="10" fill="var(--bg-surface)" stroke="var(--border-primary)"/>
-          <text x="32" y="206" font-size="10" font-weight="600" fill="var(--text-primary)">2. 孩子画像（匹配语速与内容难度）</text>
+          <text x="32" y="206" font-size="10" font-weight="600" fill="var(--text-primary)">2. 孩子画像（匹配语速与对话难度）</text>
           <rect x="32" y="218" width="104" height="24" rx="6" fill="var(--bg-subtle)" stroke="var(--border-secondary)"/>
           <text x="40" y="234" font-size="9.2" fill="var(--text-primary)">昵称：小乐</text>
           <rect x="144" y="218" width="104" height="24" rx="6" fill="var(--accent-soft)" stroke="var(--accent)"/>
@@ -1166,6 +1195,36 @@
           <text x="32" y="384" font-size="8.5" fill="var(--success)">对齐 2026-07-15 拟人化互动管理暂行办法</text>
           <rect x="20" y="412" width="240" height="38" rx="10" fill="var(--accent)"/>
           <text x="140" y="435" text-anchor="middle" font-size="11" font-weight="600" fill="var(--text-on-accent)">完成授权 · 进入儿童极简房间</text>`;
+      } else if (screenId === "parent-whisper") {
+        inner = `
+          <rect x="20" y="20" width="240" height="34" rx="8" fill="var(--bg-subtle)" stroke="var(--border-secondary)"/>
+          <text x="140" y="41" text-anchor="middle" font-size="11" font-weight="600" fill="var(--text-primary)">让小伴龙传话（家长悄悄话）</text>
+          <rect x="20" y="64" width="240" height="74" rx="10" fill="var(--bg-surface)" stroke="var(--border-primary)"/>
+          <text x="32" y="82" font-size="9.5" font-weight="600" fill="var(--text-primary)">快捷场景模板（点击即填）</text>
+          <rect x="32" y="92" width="68" height="20" rx="10" fill="var(--accent-soft)" stroke="var(--accent)"/>
+          <text x="66" y="105" text-anchor="middle" font-size="8.8" fill="var(--accent)">正向表扬</text>
+          <rect x="106" y="92" width="68" height="20" rx="10" fill="var(--bg-subtle)" stroke="var(--border-secondary)"/>
+          <text x="140" y="105" text-anchor="middle" font-size="8.8" fill="var(--text-secondary)">刷牙睡觉</text>
+          <rect x="180" y="92" width="68" height="20" rx="10" fill="var(--bg-subtle)" stroke="var(--border-secondary)"/>
+          <text x="214" y="105" text-anchor="middle" font-size="8.8" fill="var(--text-secondary)">出差想念</text>
+          <text x="32" y="128" font-size="8.5" fill="var(--text-tertiary)">传达方式：[x] 自然融入游戏语气  [ ] 明说妈妈代传</text>
+          <rect x="20" y="148" width="240" height="76" rx="10" fill="var(--bg-surface)" stroke="var(--accent)" stroke-width="1.3"/>
+          <text x="32" y="166" font-size="9.5" font-weight="600" fill="var(--accent)">家长输入（支持语音转文字）</text>
+          <text x="32" y="185" font-size="9.2" fill="var(--text-primary)">「今天小乐打疫苗没哭，夸夸他，</text>
+          <text x="32" y="201" font-size="9.2" fill="var(--text-primary)">顺便提醒他晚上八点半乖乖刷牙。」</text>
+          <text x="32" y="216" font-size="8.3" fill="var(--success)">正向语气校验通过 · 无恐吓/责备词</text>
+          <rect x="20" y="234" width="240" height="82" rx="10" fill="var(--bg-subtle)" stroke="var(--border-secondary)"/>
+          <text x="32" y="252" font-size="9.5" font-weight="600" fill="var(--purple)">小伴龙开口预览（发前可改）</text>
+          <text x="32" y="270" font-size="9.2" fill="var(--text-primary)">「小乐！我听说今天有个超级勇敢的</text>
+          <text x="32" y="286" font-size="9.2" fill="var(--text-primary)">小勇士打针都没哭，是不是你呀？今晚</text>
+          <text x="32" y="302" font-size="9.2" fill="var(--text-primary)">我们比比谁把牙齿刷得像星星一样亮！」</text>
+          <rect x="20" y="326" width="240" height="78" rx="10" fill="var(--bg-surface)" stroke="var(--border-primary)"/>
+          <text x="32" y="345" font-size="9.5" font-weight="600" fill="var(--text-primary)">传话队列与孩子反应回执</text>
+          <text x="32" y="364" font-size="8.8" fill="var(--success)">[已传达] 昨日表扬收拾玩具 → 孩子开心大笑</text>
+          <text x="32" y="381" font-size="8.8" fill="var(--warning)">[待执行] 今晚开场触发 · 支持随时撤回</text>
+          <text x="32" y="396" font-size="8.3" fill="var(--text-tertiary)">严禁 AI 冒充父母身份 · 仅作小伴龙暖心转达</text>
+          <rect x="20" y="416" width="240" height="36" rx="10" fill="var(--accent)"/>
+          <text x="140" y="438" text-anchor="middle" font-size="11" font-weight="600" fill="var(--text-on-accent)">加入下次开场传话队列</text>`;
       } else if (screenId === "parent-console") {
         inner = `
           <rect x="18" y="18" width="424" height="34" rx="8" fill="var(--bg-subtle)" stroke="var(--border-secondary)"/>
@@ -1180,14 +1239,13 @@
           <text x="30" y="152" font-size="8.8" fill="var(--success)">亲子建议：睡前可追问蓝鲸去哪了</text>
 
           <rect x="236" y="62" width="206" height="106" rx="10" fill="var(--bg-surface)" stroke="var(--border-primary)"/>
-          <text x="248" y="81" font-size="10" font-weight="600" fill="var(--purple)">作品与有声绘本馆</text>
-          <rect x="248" y="92" width="54" height="44" rx="6" fill="var(--bg-subtle)" stroke="var(--border-secondary)"/>
-          <text x="275" y="118" text-anchor="middle" font-size="8.5" fill="var(--text-secondary)">飞天鲸鱼</text>
-          <rect x="310" y="92" width="54" height="44" rx="6" fill="var(--bg-subtle)" stroke="var(--border-secondary)"/>
-          <text x="337" y="118" text-anchor="middle" font-size="8.5" fill="var(--text-secondary)">恐龙森林</text>
-          <rect x="372" y="92" width="58" height="44" rx="6" fill="var(--bg-subtle)" stroke="var(--purple)"/>
-          <text x="401" y="118" text-anchor="middle" font-size="8.5" fill="var(--purple)">绘本(5页)</text>
-          <text x="248" y="155" font-size="8.8" fill="var(--text-tertiary)">支持原稿/润色对比 · 音频回放 · 导出 PDF</text>
+          <text x="248" y="81" font-size="10" font-weight="600" fill="var(--purple)">让小伴龙传话 &amp; 作品馆</text>
+          <rect x="248" y="92" width="182" height="26" rx="6" fill="var(--accent-soft)" stroke="var(--accent)"/>
+          <text x="256" y="108" font-size="8.8" fill="var(--accent)">悄悄话：[待执行 1 条 · 夸勇敢打针]</text>
+          <rect x="248" y="124" width="86" height="32" rx="6" fill="var(--bg-subtle)" stroke="var(--border-secondary)"/>
+          <text x="291" y="144" text-anchor="middle" font-size="8.5" fill="var(--text-secondary)">涂鸦原稿/润色</text>
+          <rect x="342" y="124" width="88" height="32" rx="6" fill="var(--bg-subtle)" stroke="var(--purple)"/>
+          <text x="386" y="144" text-anchor="middle" font-size="8.5" fill="var(--purple)">有声绘本(导出PDF)</text>
 
           <rect x="18" y="178" width="206" height="110" rx="10" fill="var(--bg-surface)" stroke="var(--border-primary)"/>
           <text x="30" y="197" font-size="10" font-weight="600" fill="var(--warning)">安全边界 · 时长 · 记忆控制</text>
@@ -1216,7 +1274,7 @@
       const mod = MODULES.find((m) => m.id === activeModuleId) || MODULES[0];
       const scr = SCREENS[activeScreenId] || SCREENS.home;
 
-      document.getElementById("pageCounter").textContent = `${scr.code} / 12`;
+      document.getElementById("pageCounter").textContent = `${scr.code} / 13`;
 
       document.getElementById("moduleTabs").innerHTML = MODULES.map((m) => `
         <button class="pill ${m.id === mod.id ? "active" : ""}" data-mod="${m.id}" type="button">
